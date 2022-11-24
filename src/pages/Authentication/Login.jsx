@@ -1,33 +1,48 @@
 import React, { useContext, useState } from "react";
 import logo from "../../assets/fav.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle, FcInfo } from "react-icons/fc";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Loading from "../../components/Loading";
+import SmallLoading from "../../components/SmallLoading";
 
 const Login = () => {
   const [err, setErr] = useState("");
-  const { login, googleLogin, user, loading } = useContext(AuthContext);
+  const { login, googleLogin, user, setLoading, loading } =
+    useContext(AuthContext);
+  const location = useLocation();
+  const [loogin, setLoogin] = useState();
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+  let from = location.state?.from?.pathname || "/";
 
   const handleLogin = (data) => {
+    setLoogin(true);
     const { email, password } = data;
 
     login(email, password)
       .then(() => {
         setErr(null);
         toast.success("Login SuccessFul");
+        navigate(from, { replace: true });
+        setLoogin(false);
       })
       .catch((err) => {
         const error = err.message.split("/")[1].split(").")[0];
         setErr(error);
+        setLoogin(false);
       });
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full flex justify-between">
@@ -94,11 +109,14 @@ const Login = () => {
                 </span>
               </label>
             </div>
-            <input
-              type="submit"
-              value="Login"
-              className="btn btn-warning font-bold bg-yellow-300 w-full"
-            />
+            <div>
+              <button
+                type="submit"
+                className="btn btn-warning font-bold bg-yellow-300 w-full"
+              >
+                {loogin ? <SmallLoading /> : "Login"}
+              </button>
+            </div>
           </form>
           <div>{err && <p className="uppercase text-error">{err}</p>}</div>
           <p className="my-2 text-sm">

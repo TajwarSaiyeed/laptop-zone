@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import Loading from "../../components/Loading";
+import { AuthContext } from "../../contexts/AuthProvider";
 import Banner from "./Banner";
 import LaptopCategory from "./LaptopCategory";
 import LaptopSlider from "./LaptopSlider";
 
 const Home = () => {
   const [laptopCategories, setLaptopCategories] = useState([]);
+  const { loading } = useContext(AuthContext);
   useEffect(() => {
     fetch("category.json")
       .then((res) => res.json())
       .then((data) => setLaptopCategories(data));
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="w-full">
       {/* home banner */}

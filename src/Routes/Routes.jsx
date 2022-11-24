@@ -15,6 +15,7 @@ import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Seller from "../pages/Seller/Seller";
 import SellerAddAProduct from "../pages/Seller/SellerAddAProduct";
 import SellerProducts from "../pages/Seller/SellerProducts";
+import AdminRoute from "./AdminRoute";
 
 export const routes = createBrowserRouter([
   {
@@ -30,13 +31,45 @@ export const routes = createBrowserRouter([
   { path: "/signup", element: <Signup /> },
   {
     path: "/user/admin",
-    element: <AdminLayout />,
+    element: (
+      <AdminRoute>
+        <AdminLayout />
+      </AdminRoute>
+    ),
     errorElement: <DisplayError />,
     children: [
-      { path: "/user/admin", element: <Admin /> },
-      { path: "/user/admin/allsellers", element: <AdminAllSellers /> },
-      { path: "/user/admin/allbuyers", element: <AdminAllBuyers /> },
-      { path: "/user/admin/report", element: <AdminReportedItems /> },
+      {
+        path: "/user/admin",
+        element: (
+          <AdminRoute>
+            <Admin />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/user/admin/allsellers",
+        element: (
+          <AdminRoute>
+            <AdminAllSellers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/user/admin/allbuyers",
+        element: (
+          <AdminRoute>
+            <AdminAllBuyers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/user/admin/report",
+        element: (
+          <AdminRoute>
+            <AdminReportedItems />
+          </AdminRoute>
+        ),
+      },
     ],
   },
   {
