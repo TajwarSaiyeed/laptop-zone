@@ -1,18 +1,79 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/fav.png";
 import { FcGoogle, FcInfo } from "react-icons/fc";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../contexts/AuthProvider";
+import toast from "react-hot-toast";
 
 const Signup = () => {
+  const [err, setErr] = useState(null);
+  const { user, createUser, updateUser } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const handleCreateUser = (data) => {
-    console.log(data);
+    const { name, email, password, image, role } = data;
+    const userImage = image[0];
+    const formData = new FormData();
+    formData.append("image", userImage);
+
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMGBB_KEY}`;
+
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        const userObj = {
+          displayName: name,
+          photoURL: imgData.data.display_url,
+        };
+        createUser(email, password)
+          .then((res) => {
+            console.log(res.user);
+            updateUser(userObj)
+              .then(() => {
+                setErr(null);
+                saveUser(name, email, role);
+                toast.success("SignUp Successfull");
+              })
+              .catch((err) => {
+                const error = err.message.split("/")[1].split(").")[0];
+                setErr(error);
+              });
+            setErr(null);
+          })
+          .catch((err) => {
+            const error = err.message.split("/")[1].split(").")[0];
+            setErr(error);
+          });
+      });
   };
+
+  // save user to database
+
+  const saveUser = (name, email, role) => {
+    const user = { name, email, role };
+    fetch(`${process.env.REACT_APP_SERVER}/users`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          // setCreatedUserEmail(email);
+        }
+      });
+  };
+
   return (
     <div className="w-full flex justify-between">
       <div className="hidden bg-pink-200 lg:block lg:w-1/2 md:w-1/2">
@@ -48,7 +109,19 @@ const Signup = () => {
                 </label>
               )}
             </div>
-
+            <div className="form-control w-full ">
+              <label className="label">
+                <span className="label-text">Select Your Image</span>
+              </label>
+              <input
+                required
+                type="file"
+                name="image"
+                accept="image/*"
+                {...register("image")}
+                className="file-input file-input-bordered w-full "
+              />
+            </div>
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text font-bold">Email</span>
@@ -124,6 +197,7 @@ const Signup = () => {
               className="btn border-none hover:bg-pink-400 bg-pink-300 w-full"
             />
           </form>
+          <div>{err && <p className="uppercase text-error">{err}</p>}</div>
           <p className="my-2 text-sm">
             Already in Laptop Zone?{" "}
             <Link className="link link-primary" to="/login">
