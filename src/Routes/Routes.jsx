@@ -1,5 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
+import AdminLayout from "../Layout/AdminLayout";
 import Main from "../Layout/Main";
+import Admin from "../pages/Admin/Admin";
+import AdminAllBuyers from "../pages/Admin/AdminAllBuyers";
+import AdminAllSellers from "../pages/Admin/AdminAllSellers";
+import AdminReportedItems from "../pages/Admin/AdminReportedItems";
 import Login from "../pages/Authentication/Login";
 import Signup from "../pages/Authentication/Signup";
 import DisplayError from "../pages/DisplayError/DisplayError";
@@ -15,6 +20,17 @@ export const routes = createBrowserRouter([
   },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
+  {
+    path: "/user/admin",
+    element: <AdminLayout />,
+    errorElement: <DisplayError />,
+    children: [
+      { path: "/user/admin", element: <Admin /> },
+      { path: "/user/admin/allSellers", element: <AdminAllSellers /> },
+      { path: "/user/admin/allBuyers", element: <AdminAllBuyers /> },
+      { path: "/user/admin/report", element: <AdminReportedItems /> },
+    ],
+  },
   {
     path: "*",
     element: <PageNotFound />,
