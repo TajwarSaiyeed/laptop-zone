@@ -2,8 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/fav.png";
 import { FcGoogle, FcInfo } from "react-icons/fc";
+import { useForm } from "react-hook-form";
 
 const Signup = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const handleCreateUser = (data) => {
+    console.log(data);
+  };
   return (
     <div className="w-full flex justify-between">
       <div className="hidden bg-pink-200 lg:block lg:w-1/2 md:w-1/2">
@@ -20,26 +29,43 @@ const Signup = () => {
       <div className="w-full flex flex-col justify-center items-center min-h-screen my-10">
         <div className="w-3/4 lg:px-10 md:px-8 sm:px-6 px-5 justify-center items-center flex-col flex min-h-96 py-10 border rounded-2xl">
           <h1 className="text-3xl">Create account</h1>
-          <form className="w-full">
+          <form className="w-full" onSubmit={handleSubmit(handleCreateUser)}>
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text font-bold">Name</span>
               </label>
               <input
                 type="text"
+                {...register("name", { required: "Required" })}
                 className="input input-bordered"
                 placeholder=""
               />
+              {errors.name && (
+                <label className="label">
+                  <span className="label-text flex justify-center items-center gap-1">
+                    <FcInfo /> {errors.name?.message}
+                  </span>
+                </label>
+              )}
             </div>
+
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text font-bold">Email</span>
               </label>
               <input
                 type="email"
+                {...register("email", { required: "Required" })}
                 className="input input-bordered"
                 placeholder=""
               />
+              {errors.email && (
+                <label className="label">
+                  <span className="label-text flex justify-center items-center gap-1">
+                    <FcInfo /> {errors.email?.message}
+                  </span>
+                </label>
+              )}
             </div>
             <div className="form-control w-full">
               <label className="label">
@@ -47,14 +73,48 @@ const Signup = () => {
               </label>
               <input
                 type="password"
+                {...register("password", {
+                  required: "Passoword is Required",
+                  minLength: {
+                    value: 6,
+                    message: "Password Must be 6 Characters or long",
+                  },
+                })}
                 placeholder=""
                 className="input input-bordered w-full"
               />
 
-              <label className="label">
-                <span className="label-text flex justify-center items-center gap-1">
-                  <FcInfo /> Passwords must be at least 6 characters
-                </span>
+              {errors.password && (
+                <label className="label">
+                  <span className="label-text flex justify-center items-center gap-1">
+                    <FcInfo /> {errors.password?.message}
+                  </span>
+                </label>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text">Buyer</span>
+                <input
+                  {...register("role")}
+                  type="radio"
+                  value="buyer"
+                  name="role"
+                  className="radio checked:bg-red-500"
+                  defaultChecked
+                />
+              </label>
+            </div>
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text">Seller</span>
+                <input
+                  {...register("role")}
+                  type="radio"
+                  value="seller"
+                  name="role"
+                  className="radio checked:bg-blue-500"
+                />
               </label>
             </div>
             <br />
