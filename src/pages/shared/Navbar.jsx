@@ -12,6 +12,7 @@ const Navbar = () => {
   };
   const menuItems = (
     <React.Fragment>
+      {/* everyone can see this link */}
       <li>
         <Link className="btn btn-ghost" to="/">
           Home
@@ -22,6 +23,17 @@ const Navbar = () => {
           Blogs
         </Link>
       </li>
+      <li>
+        <Link className="btn btn-ghost" to="/user/admin">
+          Admin DashBoard
+        </Link>
+      </li>
+      <li>
+        <Link className="btn btn-ghost" to="/user/seller">
+          Seller DashBoard
+        </Link>
+      </li>
+
       <li>
         {user?.email ? (
           <>

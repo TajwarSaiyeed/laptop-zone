@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import Footer from "../pages/shared/Footer";
 import Navbar from "../pages/shared/Navbar";
 
 const AdminLayout = () => {
@@ -42,6 +43,8 @@ const AdminLayout = () => {
           </ul>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

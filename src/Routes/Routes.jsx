@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import AdminLayout from "../Layout/AdminLayout";
 import Main from "../Layout/Main";
+import SellerLayout from "../Layout/SellerLayout";
 import Admin from "../pages/Admin/Admin";
 import AdminAllBuyers from "../pages/Admin/AdminAllBuyers";
 import AdminAllSellers from "../pages/Admin/AdminAllSellers";
@@ -11,6 +12,9 @@ import Blogs from "../pages/Blogs/Blogs";
 import DisplayError from "../pages/DisplayError/DisplayError";
 import Home from "../pages/Home/Home";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
+import Seller from "../pages/Seller/Seller";
+import SellerAddAProduct from "../pages/Seller/SellerAddAProduct";
+import SellerProducts from "../pages/Seller/SellerProducts";
 
 export const routes = createBrowserRouter([
   {
@@ -30,9 +34,19 @@ export const routes = createBrowserRouter([
     errorElement: <DisplayError />,
     children: [
       { path: "/user/admin", element: <Admin /> },
-      { path: "/user/admin/allSellers", element: <AdminAllSellers /> },
-      { path: "/user/admin/allBuyers", element: <AdminAllBuyers /> },
+      { path: "/user/admin/allsellers", element: <AdminAllSellers /> },
+      { path: "/user/admin/allbuyers", element: <AdminAllBuyers /> },
       { path: "/user/admin/report", element: <AdminReportedItems /> },
+    ],
+  },
+  {
+    path: "/user/seller",
+    element: <SellerLayout />,
+    errorElement: <DisplayError />,
+    children: [
+      { path: "/user/seller", element: <Seller /> },
+      { path: "/user/seller/addaproduct", element: <SellerAddAProduct /> },
+      { path: "/user/seller/myproducts", element: <SellerProducts /> },
     ],
   },
   {

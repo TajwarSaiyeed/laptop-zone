@@ -5,7 +5,7 @@ const LaptopCategory = ({ laptopCategory }) => {
   return (
     <div
       onClick={() => console.log(id)}
-      className="card w-96 bg-base-100 shadow-xl image-full"
+      className="card w-96 bg-base-100 cursor-pointer shadow-xl image-full"
     >
       <figure>
         <img src={image} className="w-full h-full" alt="" />
