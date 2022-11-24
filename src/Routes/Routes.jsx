@@ -4,6 +4,7 @@ import Login from "../pages/Authentication/Login";
 import Signup from "../pages/Authentication/Signup";
 import DisplayError from "../pages/DisplayError/DisplayError";
 import Home from "../pages/Home/Home";
+import PageNotFound from "../pages/PageNotFound/PageNotFound";
 
 export const routes = createBrowserRouter([
   {
@@ -16,6 +17,6 @@ export const routes = createBrowserRouter([
   { path: "/signup", element: <Signup /> },
   {
     path: "*",
-    element: <div>404</div>,
+    element: <PageNotFound />,
   },
 ]);
