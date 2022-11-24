@@ -10,13 +10,10 @@ export const routes = createBrowserRouter([
     path: "/",
     element: <Main />,
     errorElement: <DisplayError />,
-    children: [
-      { path: "/", element: <Home /> },
-      { path: "/login", element: <Login /> },
-      { path: "/signup", element: <Signup /> },
-    ],
+    children: [{ path: "/", element: <Home /> }],
   },
-
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <Signup /> },
   {
     path: "*",
     element: <div>404</div>,
