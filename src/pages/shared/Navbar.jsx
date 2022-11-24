@@ -27,14 +27,16 @@ const Navbar = () => {
           Blogs
         </Link>
       </li>
-      {isAdmin && (
+      {/* admin dashboard */}
+      {isAdmin && user?.email && (
         <li>
           <Link className="btn btn-ghost" to="/user/admin">
             Admin DashBoard
           </Link>
         </li>
       )}
-      {isSeller && (
+      {/* seller deshboard */}
+      {isSeller && user?.email && (
         <li>
           <Link className="btn btn-ghost" to="/user/seller">
             Seller DashBoard

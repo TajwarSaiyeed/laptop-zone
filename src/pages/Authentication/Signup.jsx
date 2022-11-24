@@ -1,21 +1,27 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/fav.png";
 import { FcGoogle, FcInfo } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthProvider";
 import toast from "react-hot-toast";
+import SmallLoading from "../../components/SmallLoading";
 
 const Signup = () => {
   const [err, setErr] = useState(null);
-  const { user, createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser } = useContext(AuthContext);
+  const [loogin, setLoogin] = useState();
+  const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  let from = location.state?.from?.pathname || "/";
 
   const handleCreateUser = (data) => {
+    setLoogin(true);
     const { name, email, password, image, role } = data;
     const userImage = image[0];
     const formData = new FormData();
@@ -39,8 +45,10 @@ const Signup = () => {
             updateUser(userObj)
               .then(() => {
                 setErr(null);
+                setLoogin(false);
                 saveUser(name, email, role);
                 toast.success("SignUp Successfull");
+                navigate(from, { replace: true });
               })
               .catch((err) => {
                 const error = err.message.split("/")[1].split(").")[0];
@@ -191,11 +199,14 @@ const Signup = () => {
               </label>
             </div>
             <br />
-            <input
-              type="submit"
-              value="continue"
-              className="btn border-none hover:bg-pink-400 bg-pink-300 w-full"
-            />
+            <div>
+              <button
+                type="submit"
+                className="btn border-none hover:bg-pink-400 bg-pink-300 w-full"
+              >
+                {loogin ? <SmallLoading /> : "Continue"}
+              </button>
+            </div>
           </form>
           <div>{err && <p className="uppercase text-error">{err}</p>}</div>
           <p className="my-2 text-sm">

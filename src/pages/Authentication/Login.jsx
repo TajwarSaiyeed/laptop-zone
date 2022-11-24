@@ -10,8 +10,7 @@ import SmallLoading from "../../components/SmallLoading";
 
 const Login = () => {
   const [err, setErr] = useState("");
-  const { login, googleLogin, user, setLoading, loading } =
-    useContext(AuthContext);
+  const { login, loading } = useContext(AuthContext);
   const location = useLocation();
   const [loogin, setLoogin] = useState();
   const navigate = useNavigate();
