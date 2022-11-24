@@ -2,9 +2,13 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import logo from "../../assets/fav.png";
+import useAdmin from "../../hooks/useAdmin";
+import useSeller from "../../hooks/useSeller";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isAdmin] = useAdmin(user?.email);
+  const [isSeller] = useSeller(user?.email);
   const signout = () => {
     logOut()
       .then(() => {})
@@ -23,33 +27,34 @@ const Navbar = () => {
           Blogs
         </Link>
       </li>
-      <li>
-        <Link className="btn btn-ghost" to="/user/admin">
-          Admin DashBoard
-        </Link>
-      </li>
-      <li>
-        <Link className="btn btn-ghost" to="/user/seller">
-          Seller DashBoard
-        </Link>
-      </li>
-
-      <li>
-        {user?.email ? (
-          <>
-            <Link className="btn btn-ghost" to="/dashboard">
-              Dashboard
-            </Link>
-            <button onClick={signout} className="btn btn-error">
-              Logout
-            </button>
-          </>
-        ) : (
+      {isAdmin && (
+        <li>
+          <Link className="btn btn-ghost" to="/user/admin">
+            Admin DashBoard
+          </Link>
+        </li>
+      )}
+      {isSeller && (
+        <li>
+          <Link className="btn btn-ghost" to="/user/seller">
+            Seller DashBoard
+          </Link>
+        </li>
+      )}
+      {user?.email && !isAdmin && !isSeller && (
+        <li>
+          <Link className="btn btn-ghost" to="/dashboard">
+            Dashboard
+          </Link>
+        </li>
+      )}
+      {!user?.email && !user && (
+        <li>
           <Link className="btn btn-warning rounded" to="/login">
             Login
           </Link>
-        )}
-      </li>
+        </li>
+      )}
     </React.Fragment>
   );
   return (
@@ -95,7 +100,7 @@ const Navbar = () => {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="https://placeimg.com/80/80/people" alt="" />
+              <img src={user?.photoURL} alt="" />
             </div>
           </label>
           <ul
@@ -112,7 +117,9 @@ const Navbar = () => {
               <a href="/">Settings</a>
             </li>
             <li>
-              <a href="/">Logout</a>
+              <button onClick={signout} className="btn btn-error">
+                Logout
+              </button>
             </li>
           </ul>
         </div>
