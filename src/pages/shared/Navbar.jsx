@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
+import logo from "../../assets/fav.png";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -27,7 +28,7 @@ const Navbar = () => {
             </button>
           </>
         ) : (
-          <Link className="btn btn-ghost" to="/login">
+          <Link className="btn btn-warning rounded" to="/login">
             Login
           </Link>
         )}
@@ -61,37 +62,44 @@ const Navbar = () => {
             {menuItems}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
+        <Link to="/" className="btn btn-ghost gap-3 normal-case text-xl">
+          <div className="avatar">
+            <div className="w-10 rounded-full">
+              <img src={logo} alt="" />
+            </div>
+          </div>
           Laptop Zone
         </Link>
       </div>
       <div className="hidden lg:navbar-end lg:flex">
         <ul className="menu menu-horizontal p-0">{menuItems}</ul>
       </div>
-      <div className="dropdown dropdown-end">
-        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <div className="w-10 rounded-full">
-            <img src="https://placeimg.com/80/80/people" alt="" />
-          </div>
-        </label>
-        <ul
-          tabIndex={0}
-          className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-        >
-          <li>
-            <a href="/" className="justify-between">
-              Profile
-              <span className="badge">New</span>
-            </a>
-          </li>
-          <li>
-            <a href="/">Settings</a>
-          </li>
-          <li>
-            <a href="/">Logout</a>
-          </li>
-        </ul>
-      </div>
+      {user && (
+        <div className="dropdown dropdown-end">
+          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+            <div className="w-10 rounded-full">
+              <img src="https://placeimg.com/80/80/people" alt="" />
+            </div>
+          </label>
+          <ul
+            tabIndex={0}
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li>
+              <a href="/" className="justify-between">
+                Profile
+                <span className="badge">New</span>
+              </a>
+            </li>
+            <li>
+              <a href="/">Settings</a>
+            </li>
+            <li>
+              <a href="/">Logout</a>
+            </li>
+          </ul>
+        </div>
+      )}
       <div className="navbar-end lg:hidden">
         <label
           htmlFor="dashboard-drawer"
