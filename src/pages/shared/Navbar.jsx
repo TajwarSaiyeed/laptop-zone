@@ -18,6 +18,11 @@ const Navbar = () => {
         </Link>
       </li>
       <li>
+        <Link className="btn btn-ghost" to="/blogs">
+          Blogs
+        </Link>
+      </li>
+      <li>
         {user?.email ? (
           <>
             <Link className="btn btn-ghost" to="/dashboard">
@@ -72,7 +77,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="hidden lg:navbar-end lg:flex">
-        <ul className="menu menu-horizontal p-0">{menuItems}</ul>
+        <ul className="menu menu-horizontal p-0 gap-2">{menuItems}</ul>
       </div>
       {user && (
         <div className="dropdown dropdown-end">
