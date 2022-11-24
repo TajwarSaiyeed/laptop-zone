@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import logo from "../../assets/fav.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle, FcInfo } from "react-icons/fc";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
@@ -10,7 +10,7 @@ import SmallLoading from "../../components/SmallLoading";
 
 const Login = () => {
   const [err, setErr] = useState("");
-  const { login, loading } = useContext(AuthContext);
+  const { user, login, loading } = useContext(AuthContext);
   const location = useLocation();
   const [loogin, setLoogin] = useState();
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Login = () => {
     login(email, password)
       .then(() => {
         setErr(null);
-        toast.success("Login SuccessFul");
+        toast.success("Login Successful");
         navigate(from, { replace: true });
         setLoogin(false);
       })
@@ -42,7 +42,9 @@ const Login = () => {
   if (loading) {
     return <Loading />;
   }
-
+  if (user) {
+    return <Navigate to={from}></Navigate>;
+  }
   return (
     <div className="w-full flex justify-between">
       <div className="hidden bg-yellow-200 lg:block lg:w-1/2 md:w-1/2">

@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/fav.png";
 import { FcGoogle, FcInfo } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthProvider";
 import toast from "react-hot-toast";
 import SmallLoading from "../../components/SmallLoading";
+import Loading from "../../components/Loading";
 
 const Signup = () => {
   const [err, setErr] = useState(null);
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { user, loading, createUser, updateUser } = useContext(AuthContext);
   const [loogin, setLoogin] = useState();
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,10 +46,10 @@ const Signup = () => {
             updateUser(userObj)
               .then(() => {
                 setErr(null);
-                setLoogin(false);
                 saveUser(name, email, role);
                 toast.success("SignUp Successfull");
                 navigate(from, { replace: true });
+                setLoogin(false);
               })
               .catch((err) => {
                 const error = err.message.split("/")[1].split(").")[0];
@@ -81,6 +82,16 @@ const Signup = () => {
         }
       });
   };
+
+  // loading check and show spinner
+  if (loading) {
+    return <Loading />;
+  }
+
+  // user redirect
+  if (user) {
+    return <Navigate to={from}></Navigate>;
+  }
 
   return (
     <div className="w-full flex justify-between">

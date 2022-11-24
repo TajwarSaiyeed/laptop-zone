@@ -1,20 +1,16 @@
-import { ThreeCircles } from "react-loader-spinner";
+import { Dna } from "react-loader-spinner";
 import React from "react";
 
 const Loading = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <ThreeCircles
-        height="100"
-        width="100"
-        color="#4fa94d"
-        wrapperStyle={{}}
-        wrapperClass=""
+      <Dna
         visible={true}
-        ariaLabel="three-circles-rotating"
-        outerCircleColor=""
-        innerCircleColor=""
-        middleCircleColor=""
+        height="180"
+        width="180"
+        ariaLabel="dna-loading"
+        wrapperStyle={{}}
+        wrapperClass="dna-wrapper"
       />
     </div>
   );

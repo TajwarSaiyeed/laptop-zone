@@ -6,7 +6,7 @@ const SmallLoading = () => {
     <ThreeCircles
       height="20"
       width="20"
-      color="#4fa94d"
+      color="#ffffff"
       wrapperStyle={{}}
       wrapperClass=""
       visible={true}
