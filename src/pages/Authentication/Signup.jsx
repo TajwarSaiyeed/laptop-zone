@@ -11,7 +11,7 @@ import Loading from "../../components/Loading";
 const Signup = () => {
   const [err, setErr] = useState(null);
   const { user, loading, createUser, updateUser } = useContext(AuthContext);
-  const [loogin, setLoogin] = useState();
+  const [loogin, setLoogin] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const {
