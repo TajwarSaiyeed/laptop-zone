@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
+import useAdmin from "../hooks/useAdmin";
 import Footer from "../pages/shared/Footer";
 import Navbar from "../pages/shared/Navbar";
 
 const AdminLayout = () => {
+  const { user } = useContext(AuthContext);
+  const { email, photoURL, displayName } = user;
+  const [isAdmin] = useAdmin(email);
   return (
     <div className="lg:px-5">
       <Navbar />
@@ -33,12 +38,14 @@ const AdminLayout = () => {
             </li>
             <div className="avatar lg:hidden justify-center items-center w-full gap-3 h-96 flex flex-col">
               <div className="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src="https://i.ibb.co/F0b7dRw/doc1.jpg" alt="" />
+                <img src={photoURL} alt="" />
               </div>
-              <h1 className="text-xl font-bold">Tajwar Saiyeed</h1>
-              <h6 className="text-green-300 font-black text-5xl uppercase">
-                Admin
-              </h6>
+              <h1 className="text-xl font-bold">{displayName}</h1>
+              {isAdmin && (
+                <h6 className="text-green-300 font-black text-5xl uppercase">
+                  Admin
+                </h6>
+              )}
             </div>
           </ul>
         </div>

@@ -43,7 +43,7 @@ const Navbar = () => {
           </Link>
         </li>
       )}
-      {user?.email && !isAdmin && !isSeller && (
+      {!isAdmin && !isSeller && user?.email && (
         <li>
           <Link className="btn btn-ghost" to="/dashboard">
             Dashboard
@@ -86,7 +86,12 @@ const Navbar = () => {
             {menuItems}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost gap-3 normal-case text-xl">
+        <Link
+          to="/"
+          className={`${
+            (isAdmin || isSeller) && "hidden lg:flex"
+          } btn btn-ghost gap-3 normal-case text-xl`}
+        >
           <div className="avatar">
             <div className="w-10 rounded-full">
               <img src={logo} alt="" />

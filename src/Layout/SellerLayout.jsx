@@ -1,29 +1,48 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
+import useSeller from "../hooks/useSeller";
 import Footer from "../pages/shared/Footer";
 import Navbar from "../pages/shared/Navbar";
 
 const SellerLayout = () => {
+  const { user } = useContext(AuthContext);
+  const { email, displayName, photoURL } = user;
+  const [isSeller] = useSeller(email);
+
+  console.log(
+    "email: ",
+    email,
+    "dis",
+    displayName,
+    "photo",
+    photoURL,
+    isSeller
+  );
   return (
     <div className="lg:px-5">
       <Navbar />
       <div className="avatar lg:hidden justify-center items-center w-full gap-3 h-96 flex flex-col">
         <div className="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-          <img src="https://i.ibb.co/F0b7dRw/doc1.jpg" alt="" />
+          <img src={photoURL} alt="" />
         </div>
-        <h1 className="text-xl font-bold">Tajwar Saiyeed</h1>
-        <h6 className="text-green-300 font-black text-5xl uppercase">Seller</h6>
+        <h1 className="text-xl font-bold">{displayName}</h1>
+        {isSeller && (
+          <h6 className="text-green-300 font-black text-5xl uppercase">
+            Seller
+          </h6>
+        )}
       </div>
       <div className="hidden justify-evenly items-center lg:flex h-52 w-full">
         <div>
-          <h1 className="text-5xl uppercase font-bold">Tajwar Saiyeed</h1>
+          <h1 className="text-5xl uppercase font-bold">{displayName}</h1>
           <h6 className="text-green-300 font-black text-5xl uppercase">
             Seller
           </h6>
         </div>
         <div className="avatar">
           <div className="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-            <img src="https://i.ibb.co/F0b7dRw/doc1.jpg" alt="" />
+            <img src={photoURL} alt="" />
           </div>
         </div>
       </div>

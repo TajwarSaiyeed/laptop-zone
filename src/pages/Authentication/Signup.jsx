@@ -60,6 +60,7 @@ const Signup = () => {
           .catch((err) => {
             const error = err.message.split("/")[1].split(").")[0];
             setErr(error);
+            setLoogin(false);
           });
       });
   };
