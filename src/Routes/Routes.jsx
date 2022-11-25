@@ -12,6 +12,7 @@ import Blogs from "../pages/Blogs/Blogs";
 import DisplayError from "../pages/DisplayError/DisplayError";
 import Home from "../pages/Home/Home";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
+import Profile from "../pages/Profile/Profile";
 import Seller from "../pages/Seller/Seller";
 import SellerAddAProduct from "../pages/Seller/SellerAddAProduct";
 import SellerProducts from "../pages/Seller/SellerProducts";
@@ -27,6 +28,14 @@ export const routes = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/blogs", element: <Blogs /> },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   { path: "/login", element: <Login /> },
