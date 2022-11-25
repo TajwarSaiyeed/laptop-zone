@@ -2,7 +2,7 @@ import React from "react";
 import useUsers from "./useUsers";
 
 const AdminStats = () => {
-  const users = useUsers();
+  const { users } = useUsers();
   const sellers = users.filter((user) => user.role === "seller");
   const buyers = users.filter((user) => user.role === "buyer");
   return (

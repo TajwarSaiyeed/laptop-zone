@@ -1,11 +1,24 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { AiOutlineUserDelete } from "react-icons/ai";
 import useUsers from "./useUsers";
 
 const AdminAllBuyers = () => {
-  const users = useUsers();
+  const { users, refetch } = useUsers();
   const buyers = users.filter((user) => user.role === "buyer");
 
+  const handleDelete = (id) => {
+    fetch(`${process.env.REACT_APP_SERVER}/users/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          toast.success("Buyer Removed SuccessFully");
+          refetch();
+        }
+      });
+  };
   return (
     <div>
       <h1 className="text-xl lg:text-5xl md:text-3xl">All Buyers</h1>
@@ -31,7 +44,7 @@ const AdminAllBuyers = () => {
                     {buyer.role}
                   </td>
                   <td>
-                    <button>
+                    <button onClick={() => handleDelete(buyer?._id)}>
                       <AiOutlineUserDelete className="text-red-500 text-4xl" />
                     </button>
                   </td>

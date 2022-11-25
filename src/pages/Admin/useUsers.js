@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 export default function useUsers() {
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       try {
@@ -14,5 +14,5 @@ export default function useUsers() {
     },
   });
 
-  return users;
+  return { users, refetch };
 }
