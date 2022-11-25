@@ -3,6 +3,7 @@ import SmallLoading from "../../components/SmallLoading";
 import { useForm } from "react-hook-form";
 import { FcInfo } from "react-icons/fc";
 const SellerAddAProduct = () => {
+  // eslint-disable-next-line no-unused-vars
   const [loogin, setLoogin] = useState(false);
   const {
     register,
