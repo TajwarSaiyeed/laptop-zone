@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SmallLoading from "../../components/SmallLoading";
 import { useForm } from "react-hook-form";
 import { FcInfo } from "react-icons/fc";
+import axios from "axios";
 const SellerAddAProduct = () => {
+  const [laptopCategories, setLaptopCategories] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [loogin, setLoogin] = useState(false);
   const {
@@ -11,8 +13,41 @@ const SellerAddAProduct = () => {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_SERVER}/category`).then((data) => {
+      setLaptopCategories(data.data);
+      // console.log(data);
+    });
+  }, []);
+
   const handleAddProduct = (data) => {
-    console.log(data);
+    const {
+      category,
+      condition,
+      description,
+      location,
+      mobile,
+      name,
+      originalPrice,
+      price,
+      yearUse,
+    } = data;
+
+    const cName = category.split("-")[0];
+    const cId = category.split("-")[1];
+
+    const product = {
+      productName: name,
+      price,
+      originalPrice,
+      yearOfUser: yearUse,
+      productCondition: condition,
+      location,
+      mobile,
+      categoryId: cId,
+      categoryName: cName,
+    };
+    console.log(product);
   };
 
   return (
@@ -128,9 +163,18 @@ const SellerAddAProduct = () => {
             {...register("category", { required: "Caregory Required" })}
             className="select select-bordered"
           >
-            <option>Notebook</option>
+            {/* <option>Notebook</option>
             <option>Office Work Laptop</option>
-            <option>Gaming Laptop</option>
+            <option>Gaming Laptop</option> */}
+
+            {laptopCategories?.map((laptopCategory) => (
+              <option
+                key={laptopCategory._id}
+                value={`${laptopCategory.categoryName}-${laptopCategory._id}`}
+              >
+                {laptopCategory.categoryName}
+              </option>
+            ))}
           </select>
           {errors.category && (
             <label className="label">

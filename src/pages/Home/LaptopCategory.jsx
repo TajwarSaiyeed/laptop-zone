@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const LaptopCategory = ({ laptopCategory }) => {
-  const { id, image, categoryName, description } = laptopCategory;
+  const { _id, image, categoryName, description } = laptopCategory;
   return (
-    <div
-      onClick={() => console.log(id)}
+    <Link
       className="card w-96 bg-base-100 cursor-pointer shadow-xl image-full"
+      to={`/category/${_id}`}
     >
       <figure>
         <img src={image} className="w-full h-full" alt="" />
@@ -14,7 +15,7 @@ const LaptopCategory = ({ laptopCategory }) => {
         <h2 className="card-title">{categoryName}</h2>
         <p className="text-justify">{description}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

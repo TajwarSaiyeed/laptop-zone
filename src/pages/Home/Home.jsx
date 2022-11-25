@@ -4,14 +4,16 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import Banner from "./Banner";
 import LaptopCategory from "./LaptopCategory";
 import LaptopSlider from "./LaptopSlider";
+import axios from "axios";
 
 const Home = () => {
   const [laptopCategories, setLaptopCategories] = useState([]);
   const { loading } = useContext(AuthContext);
+
   useEffect(() => {
-    fetch("category.json")
-      .then((res) => res.json())
-      .then((data) => setLaptopCategories(data));
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/category`)
+      .then((data) => setLaptopCategories(data.data));
   }, []);
 
   if (loading) {
@@ -30,7 +32,7 @@ const Home = () => {
         {laptopCategories?.map((laptopCategory) => (
           <LaptopCategory
             laptopCategory={laptopCategory}
-            key={laptopCategory.id}
+            key={laptopCategory._id}
           />
         ))}
       </div>

@@ -1,20 +1,16 @@
 [
   {
-    "id": 1,
-    "categoryName": "Notebook",
-    "image": "https://i.ibb.co/swhBz6J/images-q-tbn-ANd9-Gc-Qo-Gujru-Mb7-EYtuh-Zlf-QG2la-Si-YCFlxz-Vlew-usqp-CAU.jpg",
-    "description": "A notebook computer is a battery- or AC-powered personal computer generally smaller than a briefcase that can easily be transported and conveniently used in temporary spaces such as on airplanes, in libraries, temporary offices, and at meetings."
-  },
-  {
-    "id": 2,
-    "categoryName": "Office Work Laptop",
-    "image": "https://i.ibb.co/Tq6PsV1/929f1bfe6917069e47b1b6e4b2e97bf0.jpg",
-    "description": "A laptop computer is a small personal computer whice is use for office work. They are designed to be more portable than traditional desktop computers. "
-  },
-  {
-    "id": 3,
-    "categoryName": "Gaming Laptop",
-    "image": "https://i.ibb.co/3YSx9J2/images-q-tbn-ANd9-Gc-Qfpjw-v-Izecaa-XJc1k-Mpmgi-Go4-RI0-FAXyw-TQ-usqp-CAU.jpg",
-    "description": "A gaming laptop is a small and mobile personal computer, which has its own built-in screen and is specifically designed to enable gaming on the move and in spaces where you don't have access to a desk."
+    "categoryId": "",
+    "categoryName": "",
+    "productName": "",
+    "sellerName": "",
+    "price": "",
+    "originalPrice": "",
+    "yearOfUse": "",
+    "productImage": "",
+    "productCondition": ""
   }
 ]
+
+//  booked collection
+// product collection
