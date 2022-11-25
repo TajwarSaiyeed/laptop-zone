@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SmallLoading from "../../components/SmallLoading";
 import { useForm } from "react-hook-form";
 import { FcInfo } from "react-icons/fc";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../contexts/AuthProvider";
 const SellerAddAProduct = () => {
   const [laptopCategories, setLaptopCategories] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [loogin, setLoogin] = useState(false);
+  const { user } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -21,10 +24,12 @@ const SellerAddAProduct = () => {
   }, []);
 
   const handleAddProduct = (data) => {
+    setLoogin(true);
     const {
       category,
       condition,
       description,
+      image,
       location,
       mobile,
       name,
@@ -33,21 +38,50 @@ const SellerAddAProduct = () => {
       yearUse,
     } = data;
 
-    const cName = category.split("-")[0];
-    const cId = category.split("-")[1];
+    const formData = new FormData();
+    formData.append("image", image[0]);
 
-    const product = {
-      productName: name,
-      price,
-      originalPrice,
-      yearOfUser: yearUse,
-      productCondition: condition,
-      location,
-      mobile,
-      categoryId: cId,
-      categoryName: cName,
-    };
-    console.log(product);
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMGBB_KEY}`;
+
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        const cName = category.split("-")[0];
+        const cId = category.split("-")[1];
+
+        const product = {
+          productName: name,
+          productImage: imgData.data.display_url,
+          price,
+          originalPrice,
+          yearOfUser: yearUse,
+          productCondition: condition,
+          location,
+          mobile,
+          categoryId: cId,
+          categoryName: cName,
+          details: description,
+          sellerName: user?.displayName,
+          sellerImage: user?.photoURL,
+          sellerEmail: user?.email,
+        };
+        // axios for posting product
+        axios
+          .post(`${process.env.REACT_APP_SERVER}/products`, {
+            product,
+          })
+          .then((res) => {
+            if (res.data.acknowledged) {
+              toast.success("Product Added");
+              setLoogin(false);
+              reset();
+            }
+          })
+          .catch((err) => console.log(err));
+      });
   };
 
   return (
@@ -72,6 +106,20 @@ const SellerAddAProduct = () => {
               </span>
             </label>
           )}
+        </div>
+        {/* product image */}
+        <div className="form-control w-full ">
+          <label className="label">
+            <span className="label-text">Select Your Image</span>
+          </label>
+          <input
+            required
+            type="file"
+            name="image"
+            accept="image/*"
+            {...register("image")}
+            className="file-input file-input-bordered w-full "
+          />
         </div>
         {/* product price */}
         <div className="form-control w-full">
@@ -163,10 +211,7 @@ const SellerAddAProduct = () => {
             {...register("category", { required: "Caregory Required" })}
             className="select select-bordered"
           >
-            {/* <option>Notebook</option>
-            <option>Office Work Laptop</option>
-            <option>Gaming Laptop</option> */}
-
+            <option disabled>Please Select A Specialty</option>
             {laptopCategories?.map((laptopCategory) => (
               <option
                 key={laptopCategory._id}
