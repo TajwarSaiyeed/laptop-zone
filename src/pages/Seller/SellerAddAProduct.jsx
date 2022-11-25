@@ -19,7 +19,6 @@ const SellerAddAProduct = () => {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_SERVER}/category`).then((data) => {
       setLaptopCategories(data.data);
-      // console.log(data);
     });
   }, []);
 
@@ -64,14 +63,14 @@ const SellerAddAProduct = () => {
           categoryId: cId,
           categoryName: cName,
           details: description,
-          sellerName: user?.displayName,
-          sellerImage: user?.photoURL,
-          sellerEmail: user?.email,
         };
         // axios for posting product
         axios
           .post(`${process.env.REACT_APP_SERVER}/products`, {
             product,
+            sellerName: user?.displayName,
+            sellerImage: user?.photoURL,
+            sellerEmail: user?.email,
           })
           .then((res) => {
             if (res.data.acknowledged) {
