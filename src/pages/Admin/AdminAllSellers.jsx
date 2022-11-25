@@ -20,6 +20,20 @@ const AdminAllSellers = () => {
         }
       });
   };
+
+  const handleVerified = (email) => {
+    fetch(`${process.env.REACT_APP_SERVER}/users?email=${email}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast.success("Seller Verified");
+          refetch();
+        }
+      });
+  };
+
   return (
     <div>
       <h1 className="text-xl lg:text-5xl md:text-3xl">All Sellers</h1>
@@ -51,9 +65,13 @@ const AdminAllSellers = () => {
                     </button>
                   </td>
                   <td>
-                    <button>
-                      <GoVerified className="text-blue-500 hover:text-blue-800 text-4xl" />
-                    </button>
+                    {seller?.verified === true ? (
+                      <p className="text-success font-bold">Verified</p>
+                    ) : (
+                      <button onClick={() => handleVerified(seller?.email)}>
+                        <GoVerified className="text-blue-500 hover:text-blue-800 text-4xl" />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
