@@ -1,29 +1,15 @@
 import React, { useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { useProducts } from "./useProducs";
 
 const SellerProducts = () => {
   const { user } = useContext(AuthContext);
-  const { data: products = [] } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          `${process.env.REACT_APP_SERVER}/products?email=${user?.email}`
-        );
-        const data = await res.json();
-        return data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  });
+  const { products } = useProducts(user);
 
-  console.log(products);
   return (
     <div>
       <h1 className="text-xl lg:text-5xl md:text-3xl">My Products</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center p-10">
+      <div className="grid gap-3 grid-cols-1 lg:grid-cols-2 justify-items-center p-10 ">
         {products.map((product) => {
           const {
             categoryName,
@@ -38,10 +24,10 @@ const SellerProducts = () => {
           return (
             <div
               key={product._id}
-              className="w-3/4 p-5 border border-black rounded-xl"
+              className="w-full p-5  bg-slate-100 rounded-xl"
             >
-              <div className="w-full h-96">
-                <img src={productImage} alt="" />
+              <div className="w-full min-h-96 h-96">
+                <img className="w-full h-full" src={productImage} alt="" />
               </div>
               <div>
                 <div className="overflow-x-auto">
