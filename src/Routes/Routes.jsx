@@ -16,6 +16,8 @@ import Seller from "../pages/Seller/Seller";
 import SellerAddAProduct from "../pages/Seller/SellerAddAProduct";
 import SellerProducts from "../pages/Seller/SellerProducts";
 import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
+import SellerRoute from "./SellerRoute";
 
 export const routes = createBrowserRouter([
   {
@@ -32,9 +34,9 @@ export const routes = createBrowserRouter([
   {
     path: "/user/admin",
     element: (
-      <AdminRoute>
+      <PrivateRoute>
         <AdminLayout />
-      </AdminRoute>
+      </PrivateRoute>
     ),
     errorElement: <DisplayError />,
     children: [
@@ -74,12 +76,37 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/user/seller",
-    element: <SellerLayout />,
+    element: (
+      <PrivateRoute>
+        <SellerLayout />
+      </PrivateRoute>
+    ),
     errorElement: <DisplayError />,
     children: [
-      { path: "/user/seller", element: <Seller /> },
-      { path: "/user/seller/addaproduct", element: <SellerAddAProduct /> },
-      { path: "/user/seller/myproducts", element: <SellerProducts /> },
+      {
+        path: "/user/seller",
+        element: (
+          <SellerRoute>
+            <Seller />
+          </SellerRoute>
+        ),
+      },
+      {
+        path: "/user/seller/addaproduct",
+        element: (
+          <SellerRoute>
+            <SellerAddAProduct />
+          </SellerRoute>
+        ),
+      },
+      {
+        path: "/user/seller/myproducts",
+        element: (
+          <SellerRoute>
+            <SellerProducts />
+          </SellerRoute>
+        ),
+      },
     ],
   },
   {

@@ -12,13 +12,12 @@ const AdminRoute = ({ children }) => {
   if (loading || isAdminLoading) {
     return <Loading />;
   }
-  if (user && isAdmin) {
+  if (isAdmin) {
     return children;
   } else {
     logOut()
       .then(() => {})
       .catch((err) => console.log(err));
-
     return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
   }
 };
