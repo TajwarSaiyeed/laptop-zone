@@ -18,7 +18,12 @@ const Products = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER}/category/${state.id}`
+          `${process.env.REACT_APP_SERVER}/category/${state.id}`,
+          {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
         );
         const data = await res.json();
         return data;

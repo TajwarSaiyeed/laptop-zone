@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { FaStripe } from "react-icons/fa";
+import Loading from "../../components/Loading";
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
   const { data: myorders = [], isLoading } = useQuery({
@@ -23,6 +24,10 @@ const MyOrders = () => {
       }
     },
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>

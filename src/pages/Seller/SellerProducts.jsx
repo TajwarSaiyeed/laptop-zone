@@ -6,7 +6,6 @@ import { useProducts } from "./useProducs";
 const SellerProducts = () => {
   const { user } = useContext(AuthContext);
   const { products, isLoading } = useProducts(user);
-  console.log(isLoading);
   if (isLoading) <Loading />;
   return (
     <>
