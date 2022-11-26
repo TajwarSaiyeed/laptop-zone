@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { async } from "@firebase/util";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { FaStripe } from "react-icons/fa";
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
   const { data: myorders = [], isLoading } = useQuery({
@@ -19,60 +19,42 @@ const MyOrders = () => {
     },
   });
 
-  console.log(myorders);
-
   return (
     <>
       <div className="overflow-x-auto w-full">
         <table className="table w-full">
           <thead>
             <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-              <th></th>
+              <th>Product Image</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Payment</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <img
-                        src="/tailwind-css-component-profile-2@56w.png"
-                        alt="Avatar Tailwind CSS Component"
-                      />
+            {myorders.map((myorder) => (
+              <tr key={myorder._id}>
+                <td>
+                  <div className="flex items-center space-x-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-12 h-12">
+                        <img
+                          src={myorder.productImage}
+                          alt="Avatar Tailwind CSS Component"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <div className="font-bold">Hart Hagerty</div>
-                    <div className="text-sm opacity-50">United States</div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                Zemlak, Daniel and Leannon
-                <br />
-                <span className="badge badge-ghost badge-sm">
-                  Desktop Support Technician
-                </span>
-              </td>
-              <td>Purple</td>
-              <th>
-                <button className="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr>
+                </td>
+                <td>{myorder.productName}</td>
+                <td>${myorder.price}</td>
+                <td>
+                  <button className="flex gap-3 btn btn-outline btn-success">
+                    <FaStripe fontSize={30} /> Pay
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
