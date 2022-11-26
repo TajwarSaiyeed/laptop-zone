@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import logo from "../../assets/fav.png";
 import { FcGoogle, FcInfo } from "react-icons/fc";
 import { useForm } from "react-hook-form";
@@ -7,19 +7,25 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import toast from "react-hot-toast";
 import SmallLoading from "../../components/SmallLoading";
 import Loading from "../../components/Loading";
+import useToken from "../../hooks/useToken";
 
 const Signup = () => {
   const [err, setErr] = useState(null);
   const { user, loading, createUser, updateUser } = useContext(AuthContext);
   const [looding, setLooding] = useState(false);
-  const navigate = useNavigate();
   const location = useLocation();
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   let from = location.state?.from?.pathname || "/";
+
+  if (token) {
+    return <Navigate to={from}></Navigate>;
+  }
 
   const handleCreateUser = (data) => {
     setLooding(true);
@@ -47,7 +53,6 @@ const Signup = () => {
                 setErr(null);
                 saveUser(name, email, role);
                 toast.success("SignUp Successfull");
-                navigate(from, { replace: true });
                 setLooding(false);
               })
               .catch((err) => {
@@ -78,7 +83,7 @@ const Signup = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          // setCreatedUserEmail(email);
+          setCreatedUserEmail(email);
         }
       });
   };
@@ -90,7 +95,10 @@ const Signup = () => {
 
   // user redirect
   if (user) {
-    return <Navigate to={from}></Navigate>;
+    const locTok = localStorage.getItem("accessToken");
+    if (locTok) {
+      return <Navigate to="/"></Navigate>;
+    }
   }
 
   return (

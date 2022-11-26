@@ -1,25 +1,31 @@
 import React, { useContext, useState } from "react";
 import logo from "../../assets/fav.png";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { FcGoogle, FcInfo } from "react-icons/fc";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Loading from "../../components/Loading";
 import SmallLoading from "../../components/SmallLoading";
+import useToken from "../../hooks/useToken";
 
 const Login = () => {
   const [err, setErr] = useState("");
   const { user, login, loading } = useContext(AuthContext);
   const location = useLocation();
   const [loogin, setLoogin] = useState();
-  const navigate = useNavigate();
+  const [loginUserEmail, setLoginUserEmail] = useState("");
+  const [token] = useToken(loginUserEmail);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   let from = location.state?.from?.pathname || "/";
+
+  if (token) {
+    return <Navigate to={from}></Navigate>;
+  }
 
   const handleLogin = (data) => {
     setLoogin(true);
@@ -29,7 +35,7 @@ const Login = () => {
       .then(() => {
         setErr(null);
         toast.success("Login Successful");
-        navigate(from, { replace: true });
+        setLoginUserEmail(email);
         setLoogin(false);
       })
       .catch((err) => {
@@ -43,7 +49,10 @@ const Login = () => {
     return <Loading />;
   }
   if (user) {
-    return <Navigate to={from}></Navigate>;
+    const locTok = localStorage.getItem("accessToken");
+    if (locTok) {
+      return <Navigate to={from}></Navigate>;
+    }
   }
   return (
     <div className="w-full flex justify-between">
