@@ -60,8 +60,6 @@ const SellerAddAProduct = () => {
           productCondition: condition,
           location,
           mobile,
-          categoryId: cId,
-          categoryName: cName,
           details: description,
         };
         // axios for posting product
@@ -71,6 +69,8 @@ const SellerAddAProduct = () => {
             sellerName: user?.displayName,
             sellerImage: user?.photoURL,
             sellerEmail: user?.email,
+            categoryId: cId,
+            categoryName: cName,
           })
           .then((res) => {
             if (res.data.acknowledged) {

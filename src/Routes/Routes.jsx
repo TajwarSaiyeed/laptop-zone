@@ -12,6 +12,7 @@ import Blogs from "../pages/Blogs/Blogs";
 import DisplayError from "../pages/DisplayError/DisplayError";
 import Home from "../pages/Home/Home";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
+import Products from "../pages/Products/Products";
 import Profile from "../pages/Profile/Profile";
 import Seller from "../pages/Seller/Seller";
 import SellerAddAProduct from "../pages/Seller/SellerAddAProduct";
@@ -28,6 +29,12 @@ export const routes = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/blogs", element: <Blogs /> },
+      {
+        path: "/category/:id",
+        element: <Products />,
+        loader: ({ params }) =>
+          fetch(`${process.env.REACT_APP_SERVER}/category/${params.id}`),
+      },
       {
         path: "/profile",
         element: (
