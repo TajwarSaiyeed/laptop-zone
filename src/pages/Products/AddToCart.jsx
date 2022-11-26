@@ -1,14 +1,16 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import SmallLoading from "../../components/SmallLoading";
+import toast from "react-hot-toast";
 
 const AddToCart = ({ selectProduct }) => {
   const { productName, price, productImage } = selectProduct.product;
-  console.log(selectProduct.product);
+  const { _id } = selectProduct;
   const { user } = useContext(AuthContext);
   const [looding, setLooding] = useState(false);
 
   const handleBook = (e) => {
+    setLooding(true);
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -19,6 +21,7 @@ const AddToCart = ({ selectProduct }) => {
     const meet = form.meet.value;
 
     const book = {
+      bookId: _id,
       name,
       email,
       productName,
@@ -27,6 +30,21 @@ const AddToCart = ({ selectProduct }) => {
       meet,
       productImage,
     };
+    fetch(`${process.env.REACT_APP_SERVER}/orders?id=${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(book),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Booked");
+          setLooding(false);
+          form.reset();
+        }
+      });
   };
 
   return (
