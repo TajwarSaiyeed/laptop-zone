@@ -1,16 +1,34 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useLoaderData, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import AddToCart from "./AddToCart";
 import ProductCard from "./ProductCard";
+import Loading from "../../components/Loading";
 
 const Products = () => {
-  const products = useLoaderData();
   const { state } = useLocation();
 
-  const handleReport = (id) => {
-    console.log(id);
+  const {
+    data: products = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      try {
+        const res = await fetch(
+          `${process.env.REACT_APP_SERVER}/category/${state.id}`
+        );
+        const data = await res.json();
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
 
+  const handleReport = (id) => {
     fetch(`${process.env.REACT_APP_SERVER}/products?id=${id}`, {
       method: "PUT",
     })
@@ -18,11 +36,13 @@ const Products = () => {
       .then((data) => {
         if (data.modifiedCount > 0) {
           toast.success("Product Reported");
+          refetch();
         }
       });
   };
 
   const [selectProduct, setSelectProduct] = useState(null);
+  if (isLoading) <Loading />;
 
   return (
     <div className="my-6">

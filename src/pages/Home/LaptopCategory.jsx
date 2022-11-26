@@ -7,7 +7,7 @@ const LaptopCategory = ({ laptopCategory }) => {
     <Link
       className="card w-96 bg-base-100 cursor-pointer shadow-xl image-full"
       to={`/category/${_id}`}
-      state={{ query: categoryName }}
+      state={{ query: categoryName, id: _id }}
     >
       <figure>
         <img src={image} className="w-full h-full" alt="" />
