@@ -18,7 +18,7 @@ const Products = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER}/category/${state.id}`,
+          `${process.env.REACT_APP_SERVER}/category/${state?.id}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -47,6 +47,9 @@ const Products = () => {
   };
 
   const [selectProduct, setSelectProduct] = useState(null);
+  if (selectProduct) {
+    refetch();
+  }
   if (isLoading) <Loading />;
 
   return (
@@ -70,7 +73,9 @@ const Products = () => {
           <h1 className="text-xl">No Products Available</h1>
         </div>
       )}
-      {selectProduct && <AddToCart selectProduct={selectProduct} />}
+      {selectProduct && (
+        <AddToCart refetch={refetch} selectProduct={selectProduct} />
+      )}
     </div>
   );
 };

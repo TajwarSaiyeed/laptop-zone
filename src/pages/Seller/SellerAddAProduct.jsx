@@ -73,15 +73,23 @@ const SellerAddAProduct = () => {
         };
         // axios for posting product
         axios
-          .post(`${process.env.REACT_APP_SERVER}/products`, {
-            product,
-            sellerName: user?.displayName,
-            sellerImage: user?.photoURL,
-            sellerEmail: user?.email,
-            categoryId: cId,
-            categoryName: cName,
-            uploadDate,
-          })
+          .post(
+            `${process.env.REACT_APP_SERVER}/products`,
+            {
+              product,
+              sellerName: user?.displayName,
+              sellerImage: user?.photoURL,
+              sellerEmail: user?.email,
+              categoryId: cId,
+              categoryName: cName,
+              uploadDate,
+            },
+            {
+              headers: {
+                authorization: `bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          )
           .then((res) => {
             if (res.data.acknowledged) {
               toast.success("Product Added");

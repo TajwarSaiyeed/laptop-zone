@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdDateRange, MdReport, MdSell } from "react-icons/md";
 import { BsCalendar2DateFill, BsCartPlus, BsCheckCircle } from "react-icons/bs";
 import { FaMobile } from "react-icons/fa";
 import { GrMapLocation } from "react-icons/gr";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { FcViewDetails } from "react-icons/fc";
+import axios from "axios";
 const ProductCard = ({ product, handleReport, setSelectProduct }) => {
+  const [isBooked, setIsbooked] = useState(false);
   const {
     productName,
     productImage,
@@ -18,6 +20,16 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
     details,
   } = product.product;
   const { sellerName, _id, uploadDate } = product;
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/checkOrders?id=${_id}`, {
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((data) => setIsbooked(data.data.isBooked));
+  }, [_id, setIsbooked]);
+
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <figure className="p-5">
@@ -30,16 +42,20 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
         <div className="card-actions justify-end">
           <label
             htmlFor="addToCart"
-            className="flex gap-4 justify-center items-center btn btn-success btn-outline"
+            className={`${
+              isBooked && "btn-disabled"
+            } flex gap-4 justify-center items-center btn btn-success btn-outline`}
             onClick={() => setSelectProduct(product)}
           >
             <BsCartPlus fontSize={24} />
-            Add to Card
+            {isBooked ? "Booked" : "Add to Card"}
           </label>
           <button
             onClick={() => handleReport(_id)}
             title="report"
-            className="btn btn-outline btn-error"
+            className={`${
+              isBooked ? "btn-disabled" : "btn-error"
+            } btn btn-outline`}
           >
             <MdReport fontSize={24} />
           </button>
