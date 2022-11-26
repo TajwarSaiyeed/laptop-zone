@@ -10,6 +10,7 @@ import Login from "../pages/Authentication/Login";
 import Signup from "../pages/Authentication/Signup";
 import Blogs from "../pages/Blogs/Blogs";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import MyOrders from "../pages/Dashboard/MyOrders";
 import DisplayError from "../pages/DisplayError/DisplayError";
 import Home from "../pages/Home/Home";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
@@ -21,6 +22,7 @@ import SellerProducts from "../pages/Seller/SellerProducts";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import SellerRoute from "./SellerRoute";
+import UserRoute from "./UserRoute";
 
 export const routes = createBrowserRouter([
   {
@@ -32,7 +34,11 @@ export const routes = createBrowserRouter([
       { path: "/blogs", element: <Blogs /> },
       {
         path: "/category/:id",
-        element: <Products />,
+        element: (
+          <PrivateRoute>
+            <Products />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/profile",
@@ -42,18 +48,29 @@ export const routes = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/dashboard",
-        element: (
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        ),
-      },
     ],
   },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    errorElement: <DisplayError />,
+    children: [
+      {
+        path: "/dashboard",
+        element: (
+          <UserRoute>
+            <MyOrders />
+          </UserRoute>
+        ),
+      },
+    ],
+  },
   {
     path: "/user/admin",
     element: (

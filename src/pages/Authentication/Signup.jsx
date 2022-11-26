@@ -11,7 +11,7 @@ import Loading from "../../components/Loading";
 const Signup = () => {
   const [err, setErr] = useState(null);
   const { user, loading, createUser, updateUser } = useContext(AuthContext);
-  const [loogin, setLoogin] = useState(false);
+  const [looding, setLooding] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const {
@@ -22,7 +22,7 @@ const Signup = () => {
   let from = location.state?.from?.pathname || "/";
 
   const handleCreateUser = (data) => {
-    setLoogin(true);
+    setLooding(true);
     const { name, email, password, image, role } = data;
     const userImage = image[0];
     const formData = new FormData();
@@ -48,7 +48,7 @@ const Signup = () => {
                 saveUser(name, email, role);
                 toast.success("SignUp Successfull");
                 navigate(from, { replace: true });
-                setLoogin(false);
+                setLooding(false);
               })
               .catch((err) => {
                 const error = err.message.split("/")[1].split(").")[0];
@@ -59,7 +59,7 @@ const Signup = () => {
           .catch((err) => {
             const error = err.message.split("/")[1].split(").")[0];
             setErr(error);
-            setLoogin(false);
+            setLooding(false);
           });
       });
   };
@@ -215,7 +215,7 @@ const Signup = () => {
                 type="submit"
                 className="btn border-none hover:bg-pink-400 bg-pink-300 w-full"
               >
-                {loogin ? <SmallLoading /> : "Continue"}
+                {looding ? <SmallLoading /> : "Continue"}
               </button>
             </div>
           </form>
