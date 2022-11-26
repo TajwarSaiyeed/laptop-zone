@@ -9,6 +9,7 @@ import AdminReportedItems from "../pages/Admin/AdminReportedItems";
 import Login from "../pages/Authentication/Login";
 import Signup from "../pages/Authentication/Signup";
 import Blogs from "../pages/Blogs/Blogs";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import DisplayError from "../pages/DisplayError/DisplayError";
 import Home from "../pages/Home/Home";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
@@ -40,6 +41,14 @@ export const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <Dashboard />
           </PrivateRoute>
         ),
       },

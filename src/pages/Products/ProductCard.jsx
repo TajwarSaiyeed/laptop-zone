@@ -1,12 +1,11 @@
 import React from "react";
-import { AiOutlineFolderAdd } from "react-icons/ai";
 import { MdDateRange, MdReport, MdSell } from "react-icons/md";
-import { BsCartPlus, BsCheckCircle } from "react-icons/bs";
+import { BsCalendar2DateFill, BsCartPlus, BsCheckCircle } from "react-icons/bs";
 import { FaMobile } from "react-icons/fa";
 import { GrMapLocation } from "react-icons/gr";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { FcViewDetails } from "react-icons/fc";
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, handleReport, setSelectProduct }) => {
   const {
     productName,
     productImage,
@@ -18,26 +17,30 @@ const ProductCard = ({ product }) => {
     mobile,
     details,
   } = product.product;
-  const { sellerName } = product;
+  const { sellerName, _id, uploadDate } = product;
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <figure className="p-5">
         <img src={productImage} alt="Shoes" />
       </figure>
       <div className="card-body">
-        <div className="flex items-center justify-between">
-          <h2 className="card-title">{productName}</h2>
-          <button title="Add To WishList" className="btn btn-primary">
-            <AiOutlineFolderAdd fontSize={24} />
-          </button>
-        </div>
+        <h2 className="card-title">{productName}</h2>
+
         <p>{details}</p>
         <div className="card-actions justify-end">
-          <button className="flex gap-4 justify-center items-center btn btn-success btn-outline">
+          <label
+            htmlFor="addToCart"
+            className="flex gap-4 justify-center items-center btn btn-success btn-outline"
+            onClick={() => setSelectProduct(product)}
+          >
             <BsCartPlus fontSize={24} />
             Add to Card
-          </button>
-          <button title="report" className="btn btn-outline btn-error">
+          </label>
+          <button
+            onClick={() => handleReport(_id)}
+            title="report"
+            className="btn btn-outline btn-error"
+          >
             <MdReport fontSize={24} />
           </button>
         </div>
@@ -48,13 +51,17 @@ const ProductCard = ({ product }) => {
           <FaMobile /> &nbsp; {mobile}
         </p>
         <p className="flex items-center">
-          <MdDateRange /> &nbsp; {yearOfUse}
+          <MdDateRange /> &nbsp; {yearOfUse} years
         </p>
         <p className="flex items-center">
           <GrMapLocation /> &nbsp; {location}
         </p>
         <p className="flex items-center">
           <FcViewDetails /> &nbsp; {productCondition}
+        </p>
+        <p className="flex items-center">
+          <BsCalendar2DateFill />
+          &nbsp; Posted:&nbsp;{uploadDate}
         </p>
         <button className="flex gap-4 justify-center items-center btn btn-success btn-outline">
           <RiMoneyDollarCircleFill fontSize={24} /> {price}

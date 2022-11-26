@@ -5,10 +5,12 @@ import { FcInfo } from "react-icons/fc";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { useNavigate } from "react-router-dom";
 const SellerAddAProduct = () => {
   const [laptopCategories, setLaptopCategories] = useState([]);
   const [loogin, setLoogin] = useState(false);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,6 +26,13 @@ const SellerAddAProduct = () => {
 
   const handleAddProduct = (data) => {
     setLoogin(true);
+    const dateObj = new Date();
+    const month = dateObj.getUTCMonth() + 1; //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+
+    const uploadDate = year + "/" + month + "/" + day;
+
     const {
       category,
       condition,
@@ -56,7 +65,7 @@ const SellerAddAProduct = () => {
           productImage: imgData.data.display_url,
           price,
           originalPrice,
-          yearOfUser: yearUse,
+          yearOfUse: yearUse,
           productCondition: condition,
           location,
           mobile,
@@ -71,10 +80,12 @@ const SellerAddAProduct = () => {
             sellerEmail: user?.email,
             categoryId: cId,
             categoryName: cName,
+            uploadDate,
           })
           .then((res) => {
             if (res.data.acknowledged) {
               toast.success("Product Added");
+              navigate("/user/seller/myproducts");
               setLoogin(false);
               reset();
             }
