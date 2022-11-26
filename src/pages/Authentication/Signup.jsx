@@ -77,6 +77,9 @@ const Signup = () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
       },
       body: JSON.stringify(user),
     })

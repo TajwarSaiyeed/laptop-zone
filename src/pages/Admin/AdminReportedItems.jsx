@@ -9,7 +9,12 @@ const AdminReportedItems = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER}/reportedProducts`
+          `${process.env.REACT_APP_SERVER}/reportedProducts`,
+          {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
         );
         const data = await res.json();
         return data;
@@ -22,6 +27,9 @@ const AdminReportedItems = () => {
   const handleRemove = (id) => {
     fetch(`${process.env.REACT_APP_SERVER}/reportedProducts?id=${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {

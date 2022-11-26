@@ -5,7 +5,11 @@ export default function useUsers() {
     queryKey: ["users"],
     queryFn: async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER}/users`);
+        const res = await fetch(`${process.env.REACT_APP_SERVER}/users`, {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
         const data = await res.json();
         return data;
       } catch (err) {

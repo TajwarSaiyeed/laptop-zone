@@ -11,6 +11,9 @@ const AdminAllSellers = () => {
   const handleDelete = (id) => {
     fetch(`${process.env.REACT_APP_SERVER}/users/${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -24,6 +27,9 @@ const AdminAllSellers = () => {
   const handleVerified = (email) => {
     fetch(`${process.env.REACT_APP_SERVER}/users?email=${email}`, {
       method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {

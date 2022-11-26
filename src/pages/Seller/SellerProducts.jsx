@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
+import Loading from "../../components/Loading";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useProducts } from "./useProducs";
 
 const SellerProducts = () => {
   const { user } = useContext(AuthContext);
-  const { products } = useProducts(user);
-
+  const { products, isLoading } = useProducts(user);
+  console.log(isLoading);
+  if (isLoading) <Loading />;
   return (
     <>
       {products.length > 0 ? (

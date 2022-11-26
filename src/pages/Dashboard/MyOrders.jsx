@@ -9,7 +9,12 @@ const MyOrders = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER}/orders?email=${user?.email}`
+          `${process.env.REACT_APP_SERVER}/orders?email=${user?.email}`,
+          {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
         );
         const data = await res.json();
         return data;
