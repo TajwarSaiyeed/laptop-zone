@@ -15,8 +15,8 @@ const Advertisement = ({ product, handleReport, setSelectProduct }) => {
           <label
             htmlFor="advertiseAddToCart"
             className={`${
-              isBooked && "btn-disabled"
-            } flex gap-4 justify-center items-center btn btn-success btn-outline`}
+              isBooked && "btn-disabled btn-outline"
+            } flex gap-4 justify-center items-center btn btn-primary`}
             onClick={() => setSelectProduct(product)}
           >
             {!isBooked ? (

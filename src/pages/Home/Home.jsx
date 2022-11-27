@@ -74,7 +74,10 @@ const Home = () => {
       <LaptopSlider />
 
       {/* home categories */}
-      <h1 className="font-bold text-5xl text-center">Categories</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-2xl uppercase">Categories</h1>
+        <button className="btn btn-success btn-outline">see all</button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-10 lg:gap-4 my-5">
         {laptopCategories?.map((laptopCategory) => (
           <LaptopCategory
@@ -86,8 +89,12 @@ const Home = () => {
 
       {/* home advertisement */}
       <div className="my-5">
-        <div>
-          {products.length > 0 && (
+        {products.length > 0 && (
+          <div>
+            <div className="flex justify-between items-center my-5">
+              <h1 className="text-2xl font-bold uppercase">Advertise</h1>
+              <button className="btn btn-success">See All</button>
+            </div>
             <div className="carousel carousel-center max-w-full h-96 p-4 space-x-4 bg-neutral rounded-box">
               {products.map((product) => {
                 return (
@@ -100,8 +107,8 @@ const Home = () => {
                 );
               })}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
       {selectProduct && (
         <AdvertiseAddToCard
