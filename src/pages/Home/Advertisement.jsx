@@ -1,19 +1,17 @@
 import React, { useContext } from "react";
 import { BsCartPlus, BsFillBookmarkHeartFill } from "react-icons/bs";
 import { MdReport } from "react-icons/md";
+import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Advertisement = ({ product, handleReport, setSelectProduct }) => {
   const { user } = useContext(AuthContext);
-  const { productName, productImage } = product.product;
+  const { productName, productImage, price, originalPrice } = product.product;
   const { isBooked, _id } = product;
   return (
     <div className="carousel-item relative w-96">
-      <div className="absolute bottom-16  left-2 p-2">
-        <h1 className="uppercase text-black bg-cyan-300 mb-2 p-1 rounded-md text-xl font-bold">
-          {productName}
-        </h1>
+      <div className="absolute bottom-2  p-2">
         {user?.email ? (
           <div className="card-actions">
             <label
@@ -34,11 +32,18 @@ const Advertisement = ({ product, handleReport, setSelectProduct }) => {
               <button
                 onClick={() => handleReport(_id)}
                 title="report"
-                className={`btn btn-outline btn-error`}
+                className={`btn btn-error`}
               >
                 <MdReport fontSize={24} />
               </button>
             )}
+            <h1 className="uppercase bg-cyan-800 text-white w-full font-bold p-2 rounded-md text-xl ">
+              {productName}
+            </h1>
+            <button className="flex gap-4 justify-center items-center w-full btn btn-success">
+              <RiMoneyDollarCircleFill fontSize={24} /> {price}
+              <del className="text-red-500">{originalPrice}</del>
+            </button>
           </div>
         ) : (
           <Link className="btn btn-primary" to="/login">
@@ -46,7 +51,7 @@ const Advertisement = ({ product, handleReport, setSelectProduct }) => {
           </Link>
         )}
       </div>
-      <img alt="img" src={productImage} className="rounded-box" />
+      <img alt="img" src={productImage} className="rounded-box w-full" />
     </div>
   );
 };
