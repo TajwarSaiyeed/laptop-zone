@@ -35,6 +35,9 @@ const Products = () => {
   const handleReport = (id) => {
     fetch(`${process.env.REACT_APP_SERVER}/products?id=${id}`, {
       method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { MdDateRange, MdReport, MdSell } from "react-icons/md";
 import {
   BsCalendar2DateFill,
@@ -10,6 +10,8 @@ import { FaMobile } from "react-icons/fa";
 import { GrMapLocation } from "react-icons/gr";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { FcViewDetails } from "react-icons/fc";
+import { AuthContext } from "../../contexts/AuthProvider";
+import { Link } from "react-router-dom";
 const ProductCard = ({ product, handleReport, setSelectProduct }) => {
   const {
     productName,
@@ -23,6 +25,7 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
     details,
   } = product.product;
   const { isBooked, isVerified, sellerName, _id, uploadDate } = product;
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
@@ -33,31 +36,37 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
         <h2 className="card-title">{productName}</h2>
 
         <p>{details}</p>
-        <div className="card-actions justify-end">
-          <label
-            htmlFor="addToCart"
-            className={`${
-              isBooked && "btn-disabled"
-            } flex gap-4 justify-center items-center btn btn-success btn-outline`}
-            onClick={() => setSelectProduct(product)}
-          >
-            {!isBooked ? (
-              <BsCartPlus fontSize={24} />
-            ) : (
-              <BsFillBookmarkHeartFill fontSize={24} />
-            )}
-            {isBooked ? "Booked" : "Add to Card"}
-          </label>
-          {!isBooked && (
-            <button
-              onClick={() => handleReport(_id)}
-              title="report"
-              className={`btn btn-outline btn-error`}
+        {user?.email ? (
+          <div className="card-actions justify-end">
+            <label
+              htmlFor="addToCart"
+              className={`${
+                isBooked && "btn-disabled"
+              } flex gap-4 justify-center items-center btn btn-success btn-outline`}
+              onClick={() => setSelectProduct(product)}
             >
-              <MdReport fontSize={24} />
-            </button>
-          )}
-        </div>
+              {!isBooked ? (
+                <BsCartPlus fontSize={24} />
+              ) : (
+                <BsFillBookmarkHeartFill fontSize={24} />
+              )}
+              {isBooked ? "Booked" : "Add to Card"}
+            </label>
+            {!isBooked && (
+              <button
+                onClick={() => handleReport(_id)}
+                title="report"
+                className={`btn btn-outline btn-error`}
+              >
+                <MdReport fontSize={24} />
+              </button>
+            )}
+          </div>
+        ) : (
+          <Link className="btn btn-primary" to="/login">
+            Please Login
+          </Link>
+        )}
         <div className="badge badge-primary">
           <MdSell /> &nbsp; {sellerName} &nbsp;{" "}
           {isVerified && <BsCheckCircle />}
