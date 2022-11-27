@@ -5,6 +5,7 @@ import SellerLayout from "../Layout/SellerLayout";
 import Admin from "../pages/Admin/Admin";
 import AdminAllBuyers from "../pages/Admin/AdminAllBuyers";
 import AdminAllSellers from "../pages/Admin/AdminAllSellers";
+import AdminOrders from "../pages/Admin/AdminOrders";
 import AdminReportedItems from "../pages/Admin/AdminReportedItems";
 import Login from "../pages/Authentication/Login";
 import Signup from "../pages/Authentication/Signup";
@@ -110,6 +111,14 @@ export const routes = createBrowserRouter([
         element: (
           <AdminRoute>
             <AdminReportedItems />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/user/admin/myOrders",
+        element: (
+          <AdminRoute>
+            <AdminOrders />
           </AdminRoute>
         ),
       },
