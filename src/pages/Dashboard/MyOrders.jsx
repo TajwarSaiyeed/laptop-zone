@@ -3,10 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { FaStripe } from "react-icons/fa";
 import { GiCancel } from "react-icons/gi";
+import axios from "axios";
 import Loading from "../../components/Loading";
+import toast from "react-hot-toast";
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
-  const { data: myorders = [], isLoading } = useQuery({
+  const {
+    data: myorders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["myorders"],
     queryFn: async () => {
       try {
@@ -26,9 +32,41 @@ const MyOrders = () => {
     },
   });
 
+  const handleDeleteMyOrder = (id, bookId, productName) => {
+    const confirmation = window.prompt(
+      `Are You Sure To Delete Your ${productName}. Please Type it : ${productName}`
+    );
+    console.log(id, bookId, productName);
+    // return;
+    if (confirmation === productName) {
+      axios
+        .delete(`${process.env.REACT_APP_SERVER}/orders?id=${id}`, {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((data) => {
+          if (data.data.acknowledged) {
+            toast.success("Your Order Deleted!!");
+            fetch(`${process.env.REACT_APP_SERVER}/revokeOrder?id=${bookId}`, {
+              method: "PUT",
+              headers: {
+                authorization: `bearer ${localStorage.getItem("accessToken")}`,
+              },
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                refetch();
+              });
+          }
+        });
+    }
+  };
+
   if (isLoading) {
     return <Loading />;
   }
+  console.log(myorders);
 
   return (
     <>
@@ -67,7 +105,16 @@ const MyOrders = () => {
                     </button>
                   </td>
                   <td>
-                    <button className="flex gap-3 btn-outline btn btn-error">
+                    <button
+                      onClick={() =>
+                        handleDeleteMyOrder(
+                          myorder._id,
+                          myorder.bookId,
+                          myorder.productName
+                        )
+                      }
+                      className="flex gap-3 btn-outline btn btn-error"
+                    >
                       <GiCancel fontSize={30} />
                     </button>
                   </td>
