@@ -43,7 +43,7 @@ const Home = () => {
       }
     },
   });
-
+  console.log(products);
   const handleReport = (id) => {
     fetch(`${process.env.REACT_APP_SERVER}/products?id=${id}`, {
       method: "PUT",

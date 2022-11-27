@@ -30,6 +30,20 @@ const SellerProducts = () => {
         });
     }
   };
+  const handleAdvertise = (id) => {
+    axios
+      .put(`${process.env.REACT_APP_SERVER}/advertiseProduct?id=${id}`, {
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((data) => {
+        if (data.data.acknowledged) {
+          toast.success("Your Product Advertised!!");
+          refetch();
+        }
+      });
+  };
 
   if (isLoading) <Loading />;
   return (
@@ -99,7 +113,10 @@ const SellerProducts = () => {
                       </table>
                     </div>
                     <div className="flex justify-between mt-4">
-                      <button className="text-xl gap-2 btn btn-outline btn-success btn-wide">
+                      <button
+                        onClick={() => handleAdvertise(product._id)}
+                        className="text-xl gap-2 btn btn-outline btn-success btn-wide"
+                      >
                         <FcAdvertising fontSize={30} />
                         Advertise
                       </button>
