@@ -11,7 +11,6 @@ import { GrMapLocation } from "react-icons/gr";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { FcViewDetails } from "react-icons/fc";
 const ProductCard = ({ product, handleReport, setSelectProduct }) => {
-  // const [isBooked, setIsbooked] = useState(false);
   const {
     productName,
     productImage,

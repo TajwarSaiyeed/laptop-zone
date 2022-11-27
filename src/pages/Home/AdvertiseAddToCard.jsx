@@ -3,12 +3,11 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import SmallLoading from "../../components/SmallLoading";
 import toast from "react-hot-toast";
 
-const AddToCart = ({ selectProduct, setSelectProduct, refetch }) => {
+const AdvertiseAddToCard = ({ selectProduct, setSelectProduct, refetch }) => {
   const { productName, price, productImage } = selectProduct.product;
   const { _id } = selectProduct;
   const { user } = useContext(AuthContext);
   const [looding, setLooding] = useState(false);
-
   const handleBook = (e) => {
     setLooding(true);
     e.preventDefault();
@@ -52,14 +51,13 @@ const AddToCart = ({ selectProduct, setSelectProduct, refetch }) => {
         }
       });
   };
-
   return (
     <>
-      <input type="checkbox" id="addToCart" className="modal-toggle" />
+      <input type="checkbox" id="advertiseAddToCart" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
           <label
-            htmlFor="addToCart"
+            htmlFor="advertiseAddToCart"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -163,4 +161,4 @@ const AddToCart = ({ selectProduct, setSelectProduct, refetch }) => {
   );
 };
 
-export default AddToCart;
+export default AdvertiseAddToCard;
