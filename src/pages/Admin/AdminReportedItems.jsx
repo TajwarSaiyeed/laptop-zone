@@ -41,39 +41,47 @@ const AdminReportedItems = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-xl lg:text-5xl md:text-3xl">Reported Items</h1>
-      <div className="overflow-x-auto mt-5">
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Product Name</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reportedProducts &&
-              reportedProducts?.map((reportedProduct, i) => {
-                return (
-                  <tr key={reportedProduct._id}>
-                    <th>{i + 1}</th>
-                    <td>{reportedProduct?.product?.productName}</td>
+    <>
+      {reportedProducts.length > 0 ? (
+        <div>
+          <h1 className="text-xl lg:text-5xl md:text-3xl">Reported Items</h1>
+          <div className="overflow-x-auto mt-5">
+            <table className="table table-zebra w-full">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Product Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reportedProducts &&
+                  reportedProducts?.map((reportedProduct, i) => {
+                    return (
+                      <tr key={reportedProduct._id}>
+                        <th>{i + 1}</th>
+                        <td>{reportedProduct?.product?.productName}</td>
 
-                    <td>
-                      <button
-                        onClick={() => handleRemove(reportedProduct?._id)}
-                      >
-                        <MdRemoveCircle className="text-red-500 text-4xl" />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+                        <td>
+                          <button
+                            onClick={() => handleRemove(reportedProduct?._id)}
+                          >
+                            <MdRemoveCircle className="text-red-500 text-4xl" />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-96">
+          <h1 className="text-3xl">No Reported Items!!</h1>
+        </div>
+      )}
+    </>
   );
 };
 
