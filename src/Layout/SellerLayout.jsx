@@ -10,15 +10,6 @@ const SellerLayout = () => {
   const { email, displayName, photoURL } = user;
   const [isSeller] = useSeller(email);
 
-  console.log(
-    "email: ",
-    email,
-    "dis",
-    displayName,
-    "photo",
-    photoURL,
-    isSeller
-  );
   return (
     <div className="lg:px-5">
       <Navbar />

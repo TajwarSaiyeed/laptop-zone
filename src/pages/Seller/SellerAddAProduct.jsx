@@ -6,10 +6,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import useVerify from "../../hooks/useVerify";
 const SellerAddAProduct = () => {
   const [laptopCategories, setLaptopCategories] = useState([]);
   const [loogin, setLoogin] = useState(false);
   const { user } = useContext(AuthContext);
+  const [isVerified] = useVerify(user?.email);
   const navigate = useNavigate();
   const {
     register,
@@ -83,6 +85,7 @@ const SellerAddAProduct = () => {
               categoryId: cId,
               categoryName: cName,
               uploadDate,
+              isVerified,
             },
             {
               headers: {

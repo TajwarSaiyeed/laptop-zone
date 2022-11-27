@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { FaStripe } from "react-icons/fa";
+import { GiCancel } from "react-icons/gi";
 import Loading from "../../components/Loading";
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
@@ -40,6 +41,7 @@ const MyOrders = () => {
                 <th>Product Name</th>
                 <th>Price</th>
                 <th>Payment</th>
+                <th>Cancel</th>
               </tr>
             </thead>
             <tbody>
@@ -62,6 +64,11 @@ const MyOrders = () => {
                   <td>
                     <button className="flex gap-3 btn btn-outline btn-success">
                       <FaStripe fontSize={30} /> Pay
+                    </button>
+                  </td>
+                  <td>
+                    <button className="flex gap-3 btn-outline btn btn-error">
+                      <GiCancel fontSize={30} />
                     </button>
                   </td>
                 </tr>

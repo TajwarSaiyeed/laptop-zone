@@ -14,7 +14,7 @@ const Products = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", state?.id],
     queryFn: async () => {
       try {
         const res = await fetch(
@@ -32,7 +32,7 @@ const Products = () => {
       }
     },
   });
-
+  console.log(products);
   const handleReport = (id) => {
     fetch(`${process.env.REACT_APP_SERVER}/products?id=${id}`, {
       method: "PUT",
@@ -74,7 +74,11 @@ const Products = () => {
         </div>
       )}
       {selectProduct && (
-        <AddToCart refetch={refetch} selectProduct={selectProduct} />
+        <AddToCart
+          refetch={refetch}
+          setSelectProduct={setSelectProduct}
+          selectProduct={selectProduct}
+        />
       )}
     </div>
   );

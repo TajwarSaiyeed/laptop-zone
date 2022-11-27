@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import SmallLoading from "../../components/SmallLoading";
 import toast from "react-hot-toast";
 
-const AddToCart = ({ selectProduct, refetch }) => {
+const AddToCart = ({ selectProduct, setSelectProduct, refetch }) => {
   const { productName, price, productImage } = selectProduct.product;
   const { _id } = selectProduct;
   const { user } = useContext(AuthContext);
@@ -41,11 +41,15 @@ const AddToCart = ({ selectProduct, refetch }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          refetch();
           toast.success("Booked");
           setLooding(false);
-          window.location.reload();
+          setSelectProduct(null);
+          refetch();
+          // window.location.reload();
           form.reset();
+        } else {
+          toast.error(data.message);
+          setSelectProduct(null);
         }
       });
   };

@@ -15,7 +15,6 @@ const SellerProducts = () => {
           <div className="grid gap-3 grid-cols-1 lg:grid-cols-2 justify-items-center p-10 ">
             {products.map((product) => {
               const {
-                categoryName,
                 originalPrice,
                 price,
                 yearOfUse,
@@ -24,6 +23,7 @@ const SellerProducts = () => {
                 productCondition,
                 details,
               } = product.product;
+              const { categoryName } = product;
               return (
                 <div
                   key={product._id}
