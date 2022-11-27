@@ -6,7 +6,7 @@ export const useProducts = (user) => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", user?.email],
     queryFn: async () => {
       try {
         const res = await fetch(

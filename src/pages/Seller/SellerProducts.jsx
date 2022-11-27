@@ -2,10 +2,35 @@ import React, { useContext } from "react";
 import Loading from "../../components/Loading";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useProducts } from "./useProducs";
+import { FcAdvertising } from "react-icons/fc";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const SellerProducts = () => {
   const { user } = useContext(AuthContext);
-  const { products, isLoading } = useProducts(user);
+  const { products, isLoading, refetch } = useProducts(user);
+
+  // delete product
+  const handleDeleteMyProduct = (id, productName) => {
+    const confirmation = window.prompt(
+      `Are you sure to delete ${productName}. Please Type ${productName}`
+    );
+    if (confirmation === productName) {
+      axios
+        .delete(`${process.env.REACT_APP_SERVER}/products?id=${id}`, {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((data) => {
+          if (data.data.acknowledged) {
+            toast.success("Your Product Deleted!!");
+            refetch();
+          }
+        });
+    }
+  };
+
   if (isLoading) <Loading />;
   return (
     <>
@@ -23,7 +48,7 @@ const SellerProducts = () => {
                 productCondition,
                 details,
               } = product.product;
-              const { categoryName } = product;
+              const { categoryName, _id } = product;
               return (
                 <div
                   key={product._id}
@@ -72,6 +97,18 @@ const SellerProducts = () => {
                           </tr>
                         </tbody>
                       </table>
+                    </div>
+                    <div className="flex justify-between mt-4">
+                      <button className="text-xl gap-2 btn btn-outline btn-success btn-wide">
+                        <FcAdvertising fontSize={30} />
+                        Advertise
+                      </button>
+                      <button
+                        onClick={() => handleDeleteMyProduct(_id, productName)}
+                        className="btn btn-outline btn-error"
+                      >
+                        delete
+                      </button>
                     </div>
                   </div>
                 </div>
