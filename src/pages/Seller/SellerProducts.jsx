@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Loading from "../../components/Loading";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { useProducts } from "./useProducs";
+import { useProducts } from "./useProducts";
 import { FcAdvertising } from "react-icons/fc";
 import axios from "axios";
 import toast from "react-hot-toast";

@@ -70,6 +70,9 @@ const SellerLayout = () => {
               <li>
                 <Link to="/user/seller/myproducts">My Products</Link>
               </li>
+              <li>
+                <Link to="/user/seller/myOrders">My Orders</Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -88,6 +91,11 @@ const SellerLayout = () => {
         <li>
           <Link className="btn btn-primary" to="/user/seller/myproducts">
             My Products
+          </Link>
+        </li>
+        <li>
+          <Link className="btn btn-primary" to="/user/seller/myOrders">
+            My Orders
           </Link>
         </li>
       </ul>

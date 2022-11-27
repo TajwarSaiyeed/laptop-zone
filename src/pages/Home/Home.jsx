@@ -95,7 +95,7 @@ const Home = () => {
               <h1 className="text-2xl font-bold uppercase">Advertise</h1>
               <button className="btn btn-success">See All</button>
             </div>
-            <div className="carousel carousel-center max-w-full h-96 p-4 space-x-4 bg-neutral rounded-box">
+            <div className="carousel carousel-center max-w-full h-96 p-4 space-x-4 bg-slate-300 rounded-box">
               {products.map((product) => {
                 return (
                   <Advertisement

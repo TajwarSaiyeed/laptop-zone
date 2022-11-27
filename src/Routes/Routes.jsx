@@ -18,6 +18,7 @@ import Products from "../pages/Products/Products";
 import Profile from "../pages/Profile/Profile";
 import Seller from "../pages/Seller/Seller";
 import SellerAddAProduct from "../pages/Seller/SellerAddAProduct";
+import SellerOrders from "../pages/Seller/SellerOrders";
 import SellerProducts from "../pages/Seller/SellerProducts";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -144,6 +145,14 @@ export const routes = createBrowserRouter([
         element: (
           <SellerRoute>
             <SellerProducts />
+          </SellerRoute>
+        ),
+      },
+      {
+        path: "/user/seller/myOrders",
+        element: (
+          <SellerRoute>
+            <SellerOrders />
           </SellerRoute>
         ),
       },
