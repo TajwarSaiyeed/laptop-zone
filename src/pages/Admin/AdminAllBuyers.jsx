@@ -10,6 +10,9 @@ const AdminAllBuyers = () => {
   const handleDelete = (id) => {
     fetch(`${process.env.REACT_APP_SERVER}/users/${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
