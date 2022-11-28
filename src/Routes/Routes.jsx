@@ -26,6 +26,7 @@ import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import SellerRoute from "./SellerRoute";
 import UserRoute from "./UserRoute";
+import AdminMessages from "../pages/Admin/AdminMessages";
 
 export const routes = createBrowserRouter([
   {
@@ -128,6 +129,14 @@ export const routes = createBrowserRouter([
         element: (
           <AdminRoute>
             <AdminOrders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/user/admin/messages",
+        element: (
+          <AdminRoute>
+            <AdminMessages />
           </AdminRoute>
         ),
       },

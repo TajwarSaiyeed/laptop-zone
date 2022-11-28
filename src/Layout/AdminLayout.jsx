@@ -39,6 +39,9 @@ const AdminLayout = () => {
             <li>
               <Link to="/user/admin/myOrders">My Orders</Link>
             </li>
+            <li>
+              <Link to="/user/admin/messages">Messages</Link>
+            </li>
             <div className="avatar lg:hidden justify-center items-center w-full gap-3 h-96 flex flex-col">
               <div className="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                 <img src={photoURL} alt="" />

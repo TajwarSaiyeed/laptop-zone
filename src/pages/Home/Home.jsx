@@ -9,6 +9,7 @@ import Advertisement from "./Advertisement";
 import { useQuery } from "@tanstack/react-query";
 import AdvertiseAddToCard from "./AdvertiseAddToCard";
 import toast from "react-hot-toast";
+import Message from "./Message";
 
 const Home = () => {
   const [laptopCategories, setLaptopCategories] = useState([]);
@@ -119,6 +120,14 @@ const Home = () => {
           selectProduct={selectProduct}
         />
       )}
+      <div>
+        <div className="flex justify-between items-center">
+          <h1 className="font-bold text-success text-2xl uppercase mb-2">
+            Give Your Review
+          </h1>
+        </div>
+        <Message />
+      </div>
     </div>
   );
 };
