@@ -11,7 +11,7 @@ const CheckOutForm = ({ product }) => {
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const elements = useElements();
-  const { price, email, _id, productName, bookId } = product;
+  const { price, email, productName, bookId } = product;
   console.log(product);
 
   useEffect(() => {
