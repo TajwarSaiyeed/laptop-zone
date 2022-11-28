@@ -35,8 +35,8 @@ const Message = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-96 py-10 bg-slate-100">
-      <form onSubmit={handleSubmit} className="w-full md:w-1/2 lg:w-3/4">
+    <div className="flex justify-center items-center min-h-96 py-10 my-5 bg-slate-100 rounded-lg">
+      <form onSubmit={handleSubmit} className="w-full px-4 md:w-1/2 lg:w-3/4">
         <div className="w-full flex flex-col">
           <div className="form-control w-full ">
             <label className="label">
