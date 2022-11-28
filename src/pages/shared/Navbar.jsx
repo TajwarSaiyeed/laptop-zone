@@ -57,6 +57,18 @@ const Navbar = () => {
           </Link>
         </li>
       )}
+      <div className="block lg:hidden">
+        <li>
+          <Link to="/profile" className="mb-2 justify-between">
+            Profile
+          </Link>
+        </li>
+        <li>
+          <button onClick={signout} className="btn btn-error">
+            Logout
+          </button>
+        </li>
+      </div>
     </React.Fragment>
   );
   return (
@@ -86,12 +98,7 @@ const Navbar = () => {
             {menuItems}
           </ul>
         </div>
-        <Link
-          to="/"
-          className={`${
-            (isAdmin || isSeller) && "hidden lg:flex"
-          } btn btn-ghost gap-3 normal-case text-xl`}
-        >
+        <Link to="/" className={`flex btn btn-ghost gap-3 normal-case text-xl`}>
           <div className="avatar">
             <div className="w-10 rounded-full">
               <img src={logo} alt="" />
@@ -104,7 +111,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal p-0 gap-2">{menuItems}</ul>
       </div>
       {user && (
-        <div className="dropdown dropdown-end">
+        <div className="hidden lg:block dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img src={user?.photoURL} alt="" />
@@ -115,13 +122,11 @@ const Navbar = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to="/profile" className="justify-between">
+              <Link to="/profile" className="mb-2 justify-between">
                 Profile
               </Link>
             </li>
-            <li>
-              <a href="/">Settings</a>
-            </li>
+
             <li>
               <button onClick={signout} className="btn btn-error">
                 Logout
