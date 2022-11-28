@@ -42,7 +42,6 @@ const SellerProducts = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.acknowledged) {
           setAdvertiseLoading(false);
           toast.success("Your Product Advertised!!");
@@ -69,7 +68,6 @@ const SellerProducts = () => {
                 details,
               } = product.product;
               const { categoryName, _id, sold } = product;
-              console.log(product);
               return (
                 <div
                   key={product._id}

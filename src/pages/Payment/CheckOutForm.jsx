@@ -12,7 +12,6 @@ const CheckOutForm = ({ product }) => {
   const [isLoading, setIsLoading] = useState(false);
   const elements = useElements();
   const { price, email, productName, bookId } = product;
-  console.log(product);
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -48,8 +47,6 @@ const CheckOutForm = ({ product }) => {
       setIsLoading(true);
     } else {
       setCardError("");
-      //   console.log("[PaymentMethod]", paymentMethod);
-      //   setSuccess("Payment Completed")
     }
     setSuccess("");
     setIsLoading(true);
@@ -88,7 +85,6 @@ const CheckOutForm = ({ product }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data);
           if (data.insertedId) {
             setSuccess("Congrats! Your Payment Completed");
             setTransactionId(paymentIntent.id);

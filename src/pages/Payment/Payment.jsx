@@ -8,7 +8,6 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 const Payment = () => {
   const { state } = useLocation();
-  console.log(state);
   const { productName, price, productImage } = state.query;
   return (
     <div className="my-5 gap-5 flex flex-col w-full justify-center items-center">

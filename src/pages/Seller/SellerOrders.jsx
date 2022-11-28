@@ -28,7 +28,7 @@ const SellerOrders = () => {
         const data = await res.json();
         return data;
       } catch (err) {
-        console.log(err.message);
+        toast.error(err.message);
       }
     },
   });
@@ -37,8 +37,7 @@ const SellerOrders = () => {
     const confirmation = window.prompt(
       `Are You Sure To Delete Your ${productName}. Please Type it : ${productName}`
     );
-    console.log(id, bookId, productName);
-    // return;
+
     if (confirmation === productName) {
       axios
         .delete(`${process.env.REACT_APP_SERVER}/orders?id=${id}`, {

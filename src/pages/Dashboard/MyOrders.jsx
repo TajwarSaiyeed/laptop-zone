@@ -37,8 +37,7 @@ const MyOrders = () => {
     const confirmation = window.prompt(
       `Are You Sure To Delete Your ${productName}. Please Type it : ${productName}`
     );
-    console.log(id, bookId, productName);
-    // return;
+
     if (confirmation === productName) {
       axios
         .delete(`${process.env.REACT_APP_SERVER}/orders?id=${id}`, {
@@ -63,7 +62,6 @@ const MyOrders = () => {
         });
     }
   };
-  console.log(myorders);
   if (isLoading) {
     return <Loading />;
   }
