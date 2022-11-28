@@ -22,7 +22,9 @@ seller can advertise his/her products<br/>
 i have use stripe for payment system<br/>
 i have 3 special route buyer,seller, admin<br/>
 only admin can visit his route. he can't visit a buyer/seller account. same role also for buyer and seller also.
-buyer can book a products, there is 7 section in home page first navbar, banner, slider, category, advertisement, message and footer
+buyer can book a products, there is 7 section in home page first navbar, banner, slider, category, advertisement, message and footer,<br/>
+user can revoke his order before payment.
+
 
 
 
