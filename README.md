@@ -1,3 +1,28 @@
+# Project Name : laptop Zone
+Build By Tajwar Saiyeed Abid
+
+# Live Link : <https://laptop-zone.web.app/>
+# Dependencies I have use in my project
+React router dom
+react hot toast
+Tailwind 
+Daisy UI
+MongoDB for Database
+IMGBB for Image Store
+Firebase for authentication system
+React hook form
+Tanstack Query.
+stripe
+# Features:
+An admin account, seller accounts, buyers accounts,
+Admin can verify a seller and delete also,
+Admin can delete a buyer,
+only Logged user can send message to admin
+seller can advertise his/her products
+i have use stripe for payment system
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
