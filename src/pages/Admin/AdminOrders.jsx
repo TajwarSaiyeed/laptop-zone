@@ -102,7 +102,7 @@ const AdminOrders = () => {
                       <Link
                         to={`/payment/${myorder._id}`}
                         state={{ query: myorder }}
-                        className="flex gap-3 btn btn-outline btn-success"
+                        className="flex gap-3 btn btn-outline btn-wide btn-success"
                       >
                         <FaStripe fontSize={30} /> Pay
                       </Link>
