@@ -60,7 +60,7 @@ const AdminAllBuyers = () => {
           </div>
         </div>
       ) : (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center h-96">
           <h1 className="text-3xl">No Buyers Available!!</h1>
         </div>
       )}
