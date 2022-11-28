@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useRouteError } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthProvider";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const DisplayError = () => {
   const error = useRouteError();

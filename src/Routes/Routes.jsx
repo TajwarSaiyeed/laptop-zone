@@ -12,9 +12,10 @@ import Signup from "../pages/Authentication/Signup";
 import Blogs from "../pages/Blogs/Blogs";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import MyOrders from "../pages/Dashboard/MyOrders";
-import DisplayError from "../pages/DisplayError/DisplayError";
+import DisplayError from "../pages/shared/DisplayError/DisplayError";
 import Home from "../pages/Home/Home";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
+import Payment from "../pages/Payment/Payment";
 import Products from "../pages/Products/Products";
 import Profile from "../pages/Profile/Profile";
 import Seller from "../pages/Seller/Seller";
@@ -39,6 +40,14 @@ export const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Products />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/payment/:id",
+        element: (
+          <PrivateRoute>
+            <Payment />
           </PrivateRoute>
         ),
       },

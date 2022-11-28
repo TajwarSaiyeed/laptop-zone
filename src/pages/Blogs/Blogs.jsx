@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../../components/Loading";
 
 const Blogs = () => {
   const [qnas, setQNAS] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     // axios user for getting blogs data
-    axios
-      .get(`${process.env.REACT_APP_SERVER}/blogs`)
-      .then((data) => setQNAS(data.data));
+    setLoading(true);
+    axios.get(`${process.env.REACT_APP_SERVER}/blogs`).then((data) => {
+      setLoading(false);
+      setQNAS(data.data);
+    });
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-5">

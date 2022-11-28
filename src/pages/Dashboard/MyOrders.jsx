@@ -6,6 +6,7 @@ import { GiCancel } from "react-icons/gi";
 import axios from "axios";
 import Loading from "../../components/Loading";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
   const {
@@ -13,7 +14,7 @@ const MyOrders = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["myorders"],
+    queryKey: ["myorders", user?.emi],
     queryFn: async () => {
       try {
         const res = await fetch(
@@ -66,7 +67,6 @@ const MyOrders = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(myorders);
 
   return (
     <>
@@ -100,9 +100,20 @@ const MyOrders = () => {
                   <td>{myorder.productName}</td>
                   <td>${myorder.price}</td>
                   <td>
-                    <button className="flex gap-3 btn btn-outline btn-success">
-                      <FaStripe fontSize={30} /> Pay
-                    </button>
+                    {myorder.price && !myorder?.paid && (
+                      <Link
+                        to={`/payment/${myorder._id}`}
+                        state={{ query: myorder }}
+                        className="flex gap-3 btn btn-outline btn-success"
+                      >
+                        <FaStripe fontSize={30} /> Pay
+                      </Link>
+                    )}
+                    {myorder.price && myorder.paid && (
+                      <span className="text-success text-bold uppercase">
+                        Paid
+                      </span>
+                    )}
                   </td>
                   <td>
                     <button
