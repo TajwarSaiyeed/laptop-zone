@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import Loading from "../../components/Loading";
+import SmallLoading from "../../components/SmallLoading";
 
 const CheckOutForm = ({ product }) => {
   const stripe = useStripe();
@@ -96,10 +96,10 @@ const CheckOutForm = ({ product }) => {
     }
   };
 
-  if (isLoading) <Loading />;
+  if (isLoading) <SmallLoading />;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="w-full" onSubmit={handleSubmit}>
       <CardElement
         options={{
           style: {
@@ -123,9 +123,13 @@ const CheckOutForm = ({ product }) => {
       >
         Pay
       </button>
-      {isLoading && <Loading />}
+      {isLoading && (
+        <div className="h-40 flex justify-center items-center">
+          <button className="btn loading">loading</button>
+        </div>
+      )}
       {cardError && (
-        <p className="uppercase text-error text-xl">{cardError.message}</p>
+        <p className="uppercase text-error text-md">{cardError.message}</p>
       )}
       {success && (
         <>

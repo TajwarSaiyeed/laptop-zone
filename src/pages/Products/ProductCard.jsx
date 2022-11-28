@@ -97,14 +97,16 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
           <BsCalendar2DateFill />
           &nbsp; Posted:&nbsp;{uploadDate}
         </p>
-        <Link
-          to={`/payment/${_id}`}
-          state={{ query: paymentProduct }}
-          className="flex gap-4 justify-center items-center btn btn-success btn-outline"
-        >
-          <RiMoneyDollarCircleFill fontSize={24} /> {price}
-          <del className="text-red-500">{originalPrice}</del>
-        </Link>
+        {!isBooked && (
+          <Link
+            to={`/payment/${_id}`}
+            state={{ query: paymentProduct }}
+            className="flex gap-4 justify-center items-center btn btn-success btn-outline"
+          >
+            <RiMoneyDollarCircleFill fontSize={24} /> {price}
+            <del className="text-red-500">{originalPrice}</del>
+          </Link>
+        )}
       </div>
     </div>
   );

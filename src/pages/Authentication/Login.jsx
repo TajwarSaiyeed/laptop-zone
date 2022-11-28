@@ -68,7 +68,6 @@ const Login = () => {
 
   const saveUser = (name, email, role) => {
     const user = { name, email, role };
-    console.log(user);
     fetch(`${process.env.REACT_APP_SERVER}/users/${email}`, {
       method: "PUT",
       headers: {
