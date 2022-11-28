@@ -3,23 +3,26 @@ Build By Tajwar Saiyeed Abid
 
 # Live Link : <https://laptop-zone.web.app/>
 # Dependencies I have use in my project
-React router dom
-react hot toast
-Tailwind 
-Daisy UI
-MongoDB for Database
-IMGBB for Image Store
-Firebase for authentication system
-React hook form
-Tanstack Query.
-stripe
+React router dom <br />
+react hot toast <br />
+Tailwind  <br />
+Daisy UI <br />
+MongoDB for Database <br />
+IMGBB for Image Store <br />
+Firebase for authentication system <br />
+React hook form <br />
+Tanstack Query. <br />
+stripe <br />
 # Features:
-An admin account, seller accounts, buyers accounts,
-Admin can verify a seller and delete also,
-Admin can delete a buyer,
-only Logged user can send message to admin
-seller can advertise his/her products
-i have use stripe for payment system
+An admin account, seller accounts, buyers accounts,<br/>
+Admin can verify a seller and delete also,<br/>
+Admin can delete a buyer,<br/>
+only Logged user can send message to admin<br/>
+seller can advertise his/her products<br/>
+i have use stripe for payment system<br/>
+i have 3 special route buyer,seller, admin<br/>
+only admin can visit his route. he can't visit a buyer/seller account. same role also for buyer and seller also.
+buyer can book a products, there is 7 section in home page first navbar, banner, slider, category, advertisement, message and footer
 
 
 
