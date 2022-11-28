@@ -8,13 +8,17 @@ import toast from "react-hot-toast";
 import Loading from "../../components/Loading";
 import SmallLoading from "../../components/SmallLoading";
 import useToken from "../../hooks/useToken";
+import { GoogleAuthProvider } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
   const [err, setErr] = useState("");
-  const { user, login, loading } = useContext(AuthContext);
+  const { user, login, loading, googleLogin } = useContext(AuthContext);
   const location = useLocation();
   const [loogin, setLoogin] = useState();
   const [loginUserEmail, setLoginUserEmail] = useState("");
+  // const [createdUserEmail, setCreatedUserEmail] = useState("");
   const [token] = useToken(loginUserEmail);
   const {
     register,
@@ -42,6 +46,42 @@ const Login = () => {
         const error = err.message.split("/")[1].split(").")[0];
         setErr(error);
         setLoogin(false);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    setLoogin(true);
+    const role = "buyer";
+    googleLogin(googleProvider)
+      .then((res) => {
+        setErr(null);
+        const user = res.user;
+        saveUser(user.displayName, user.email, role);
+        toast.success("SignUp Successfull");
+        setLoogin(false);
+      })
+      .catch((err) => {
+        const error = err.message.split("/")[1].split(").")[0];
+        setErr(error);
+      });
+  };
+
+  const saveUser = (name, email, role) => {
+    const user = { name, email, role };
+    console.log(user);
+    fetch(`${process.env.REACT_APP_SERVER}/users/${email}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          setLoginUserEmail(email);
+        }
       });
   };
 
@@ -136,7 +176,7 @@ const Login = () => {
             </Link>
           </p>
 
-          <button className="btn my-3 gap-3">
+          <button onClick={handleGoogleLogin} className="btn my-3 gap-3">
             <FcGoogle className="w-4 h-4" />
             continue with google
           </button>

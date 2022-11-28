@@ -27,6 +27,16 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
   const { isBooked, isVerified, sellerName, _id, uploadDate } = product;
   const { user } = useContext(AuthContext);
 
+  const paymentProduct = {
+    bookId: _id,
+    email: user.email,
+    name: user.displayName,
+    productImage,
+    productName,
+    price,
+    phone: mobile,
+  };
+
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <figure className="p-5">
@@ -89,7 +99,7 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
         </p>
         <Link
           to={`/payment/${_id}`}
-          state={{ query: product.product }}
+          state={{ query: paymentProduct }}
           className="flex gap-4 justify-center items-center btn btn-success btn-outline"
         >
           <RiMoneyDollarCircleFill fontSize={24} /> {price}

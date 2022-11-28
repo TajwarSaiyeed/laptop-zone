@@ -8,10 +8,14 @@ import toast from "react-hot-toast";
 import SmallLoading from "../../components/SmallLoading";
 import Loading from "../../components/Loading";
 import useToken from "../../hooks/useToken";
+import { GoogleAuthProvider } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
 
 const Signup = () => {
   const [err, setErr] = useState(null);
-  const { user, loading, createUser, updateUser } = useContext(AuthContext);
+  const { user, googleLogin, loading, createUser, updateUser } =
+    useContext(AuthContext);
   const [looding, setLooding] = useState(false);
   const location = useLocation();
   const [createdUserEmail, setCreatedUserEmail] = useState("");
@@ -69,17 +73,31 @@ const Signup = () => {
       });
   };
 
+  const handleGoogleLogin = () => {
+    const role = "buyer";
+    googleLogin(googleProvider)
+      .then((res) => {
+        const user = res.user;
+        setErr(null);
+        saveUser(user.displayName, user.email, role);
+        toast.success("SignUp Successfull");
+        setLooding(false);
+      })
+      .catch((err) => {
+        const error = err.message.split("/")[1].split(").")[0];
+        setErr(error);
+      });
+  };
+
   // save user to database
 
   const saveUser = (name, email, role) => {
     const user = { name, email, role };
-    fetch(`${process.env.REACT_APP_SERVER}/users`, {
-      method: "POST",
+    fetch(`${process.env.REACT_APP_SERVER}/users/${email}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify(user),
     })
@@ -238,7 +256,7 @@ const Signup = () => {
             </Link>
           </p>
 
-          <button className="btn my-3 gap-3">
+          <button onClick={handleGoogleLogin} className="btn my-3 gap-3">
             <FcGoogle className="w-4 h-4" />
             continue with google
           </button>

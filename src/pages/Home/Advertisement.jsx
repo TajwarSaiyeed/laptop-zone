@@ -7,8 +7,19 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 const Advertisement = ({ product, handleReport, setSelectProduct }) => {
   const { user } = useContext(AuthContext);
-  const { productName, productImage, price, originalPrice } = product.product;
+  const { productName, mobile, productImage, price, originalPrice } =
+    product.product;
   const { isBooked, _id } = product;
+
+  const paymentProduct = {
+    bookId: _id,
+    email: user?.email,
+    name: user?.displayName,
+    productImage,
+    productName,
+    price,
+    phone: mobile,
+  };
 
   return (
     <div className="carousel-item relative w-96">
@@ -41,14 +52,16 @@ const Advertisement = ({ product, handleReport, setSelectProduct }) => {
             <h1 className="uppercase bg-cyan-800 text-white w-full font-bold p-2 rounded-md text-xl ">
               {productName}
             </h1>
-            <Link
-              to={`/payment/${_id}`}
-              state={{ query: product.product }}
-              className="flex gap-4 justify-center items-center w-full btn btn-success"
-            >
-              <RiMoneyDollarCircleFill fontSize={24} /> {price}
-              <del className="text-red-500">{originalPrice}</del>
-            </Link>
+            {!isBooked && (
+              <Link
+                to={`/payment/${_id}`}
+                state={{ query: paymentProduct }}
+                className="flex gap-4 justify-center items-center w-full btn btn-success"
+              >
+                <RiMoneyDollarCircleFill fontSize={24} /> {price}
+                <del className="text-red-500">{originalPrice}</del>
+              </Link>
+            )}
           </div>
         ) : (
           <Link className="btn btn-primary" to="/login">
