@@ -23,40 +23,48 @@ const AdminAllBuyers = () => {
       });
   };
   return (
-    <div>
-      <h1 className="text-xl lg:text-5xl md:text-3xl">All Buyers</h1>
-      <div className="overflow-x-auto mt-5">
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {buyers &&
-              buyers?.map((buyer, i) => (
-                <tr key={buyer._id}>
-                  <th>{i + 1}</th>
-                  <td>{buyer?.name}</td>
-                  <td>{buyer?.email}</td>
-                  <td className="uppercase font-bold text-primary">
-                    {buyer.role}
-                  </td>
-                  <td>
-                    <button onClick={() => handleDelete(buyer?._id)}>
-                      <AiOutlineUserDelete className="text-red-500 text-4xl" />
-                    </button>
-                  </td>
+    <>
+      {buyers.length > 0 ? (
+        <div>
+          <h1 className="text-xl lg:text-5xl md:text-3xl">All Buyers</h1>
+          <div className="overflow-x-auto mt-5">
+            <table className="table table-zebra w-full">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+              </thead>
+              <tbody>
+                {buyers &&
+                  buyers?.map((buyer, i) => (
+                    <tr key={buyer._id}>
+                      <th>{i + 1}</th>
+                      <td>{buyer?.name}</td>
+                      <td>{buyer?.email}</td>
+                      <td className="uppercase font-bold text-primary">
+                        {buyer.role}
+                      </td>
+                      <td>
+                        <button onClick={() => handleDelete(buyer?._id)}>
+                          <AiOutlineUserDelete className="text-red-500 text-4xl" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center">
+          <h1 className="text-3xl">No Buyers Available!!</h1>
+        </div>
+      )}
+    </>
   );
 };
 
