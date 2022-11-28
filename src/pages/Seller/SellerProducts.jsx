@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Loading from "../../components/Loading";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useProducts } from "./useProducts";
 import { FcAdvertising } from "react-icons/fc";
 import axios from "axios";
 import toast from "react-hot-toast";
+import SmallLoading from "../../components/SmallLoading";
 
 const SellerProducts = () => {
   const { user } = useContext(AuthContext);
   const { products, isLoading, refetch } = useProducts(user);
-
+  const [advertiseLoading, setAdvertiseLoading] = useState(false);
   // delete product
   const handleDeleteMyProduct = (id, productName) => {
     const confirmation = window.prompt(
@@ -30,15 +31,20 @@ const SellerProducts = () => {
         });
     }
   };
+
   const handleAdvertise = (id) => {
-    axios
-      .put(`${process.env.REACT_APP_SERVER}/advertiseProduct?id=${id}`, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+    setAdvertiseLoading(true);
+    fetch(`${process.env.REACT_APP_SERVER}/advertiseProduct?id=${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
       .then((data) => {
-        if (data.data.acknowledged) {
+        console.log(data);
+        if (data.acknowledged) {
+          setAdvertiseLoading(false);
           toast.success("Your Product Advertised!!");
           refetch();
         }
@@ -115,10 +121,16 @@ const SellerProducts = () => {
                     <div className="flex justify-between mt-4">
                       <button
                         onClick={() => handleAdvertise(product._id)}
-                        className="text-xl gap-2 btn btn-outline btn-success btn-wide"
+                        className="text-xl btn btn-outline btn-success btn-wide"
                       >
-                        <FcAdvertising fontSize={30} />
-                        Advertise
+                        {advertiseLoading ? (
+                          <SmallLoading />
+                        ) : (
+                          <>
+                            <FcAdvertising className="mr-2" fontSize={30} />
+                            Advertise
+                          </>
+                        )}
                       </button>
                       <button
                         onClick={() => handleDeleteMyProduct(_id, productName)}
