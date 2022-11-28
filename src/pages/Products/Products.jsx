@@ -59,7 +59,7 @@ const Products = () => {
       {products.length > 0 ? (
         <>
           <h1 className="text-3xl">All Products of {state?.query}</h1>
-          <div className="my-3 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2 justify-items-center">
+          <div className="my-3  grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2 justify-items-center">
             {products.map((product) => (
               <ProductCard
                 key={product._id}

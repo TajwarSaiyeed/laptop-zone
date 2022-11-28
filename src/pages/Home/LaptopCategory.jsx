@@ -5,7 +5,7 @@ const LaptopCategory = ({ laptopCategory }) => {
   const { _id, image, categoryName, description } = laptopCategory;
   return (
     <Link
-      className="card w-96 bg-base-100 cursor-pointer shadow-xl image-full"
+      className="card max-w-96 bg-base-100 cursor-pointer shadow-xl image-full"
       to={`/category/${_id}`}
       state={{ query: categoryName, id: _id }}
     >

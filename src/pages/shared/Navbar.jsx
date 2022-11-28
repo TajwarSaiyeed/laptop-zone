@@ -57,18 +57,20 @@ const Navbar = () => {
           </Link>
         </li>
       )}
-      <div className="block lg:hidden">
-        <li>
-          <Link to="/profile" className="mb-2 justify-between">
-            Profile
-          </Link>
-        </li>
-        <li>
-          <button onClick={signout} className="btn btn-error">
-            Logout
-          </button>
-        </li>
-      </div>
+      {user?.email && (
+        <div className="block lg:hidden">
+          <li>
+            <Link to="/profile" className="mb-2 justify-between">
+              Profile
+            </Link>
+          </li>
+          <li>
+            <button onClick={signout} className="btn btn-error">
+              Logout
+            </button>
+          </li>
+        </div>
+      )}
     </React.Fragment>
   );
   return (

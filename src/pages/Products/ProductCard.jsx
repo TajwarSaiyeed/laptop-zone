@@ -38,7 +38,7 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
   };
 
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <div className="card min-w-96 bg-base-100 shadow-xl">
       <figure className="p-5">
         <img src={productImage} alt="Shoes" />
       </figure>
