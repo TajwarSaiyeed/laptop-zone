@@ -68,7 +68,8 @@ const SellerProducts = () => {
                 productCondition,
                 details,
               } = product.product;
-              const { categoryName, _id } = product;
+              const { categoryName, _id, sold } = product;
+              console.log(product);
               return (
                 <div
                   key={product._id}
@@ -119,19 +120,23 @@ const SellerProducts = () => {
                       </table>
                     </div>
                     <div className="flex justify-between mt-4">
-                      <button
-                        onClick={() => handleAdvertise(product._id)}
-                        className="text-xl btn btn-outline btn-success btn-wide"
-                      >
-                        {advertiseLoading ? (
-                          <SmallLoading />
-                        ) : (
-                          <>
-                            <FcAdvertising className="mr-2" fontSize={30} />
-                            Advertise
-                          </>
-                        )}
-                      </button>
+                      {!sold ? (
+                        <button
+                          onClick={() => handleAdvertise(product._id)}
+                          className="text-xl btn btn-outline btn-success btn-wide"
+                        >
+                          {advertiseLoading ? (
+                            <SmallLoading />
+                          ) : (
+                            <>
+                              <FcAdvertising className="mr-2" fontSize={30} />
+                              Advertise
+                            </>
+                          )}
+                        </button>
+                      ) : (
+                        <p className="btn  btn-primary">Sold</p>
+                      )}
                       <button
                         onClick={() => handleDeleteMyProduct(_id, productName)}
                         className="btn btn-outline btn-error"

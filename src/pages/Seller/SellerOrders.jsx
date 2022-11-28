@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../contexts/AuthProvider";
 import Loading from "../../components/Loading";
+import { Link } from "react-router-dom";
 const SellerOrders = () => {
   const { user } = useContext(AuthContext);
   const {
@@ -99,9 +100,20 @@ const SellerOrders = () => {
                   <td>{myorder.productName}</td>
                   <td>${myorder.price}</td>
                   <td>
-                    <button className="flex gap-3 btn btn-outline btn-success">
-                      <FaStripe fontSize={30} /> Pay
-                    </button>
+                    {myorder.price && !myorder?.paid && (
+                      <Link
+                        to={`/payment/${myorder._id}`}
+                        state={{ query: myorder }}
+                        className="flex gap-3 btn btn-outline btn-success"
+                      >
+                        <FaStripe fontSize={30} /> Pay
+                      </Link>
+                    )}
+                    {myorder.price && myorder.paid && (
+                      <span className="text-success text-bold uppercase">
+                        Paid
+                      </span>
+                    )}
                   </td>
                   <td>
                     <button

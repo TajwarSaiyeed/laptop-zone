@@ -87,10 +87,14 @@ const ProductCard = ({ product, handleReport, setSelectProduct }) => {
           <BsCalendar2DateFill />
           &nbsp; Posted:&nbsp;{uploadDate}
         </p>
-        <button className="flex gap-4 justify-center items-center btn btn-success btn-outline">
+        <Link
+          to={`/payment/${_id}`}
+          state={{ query: product.product }}
+          className="flex gap-4 justify-center items-center btn btn-success btn-outline"
+        >
           <RiMoneyDollarCircleFill fontSize={24} /> {price}
           <del className="text-red-500">{originalPrice}</del>
-        </button>
+        </Link>
       </div>
     </div>
   );

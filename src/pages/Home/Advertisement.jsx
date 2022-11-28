@@ -9,6 +9,7 @@ const Advertisement = ({ product, handleReport, setSelectProduct }) => {
   const { user } = useContext(AuthContext);
   const { productName, productImage, price, originalPrice } = product.product;
   const { isBooked, _id } = product;
+
   return (
     <div className="carousel-item relative w-96">
       <div className="absolute bottom-2  p-2">
@@ -40,10 +41,14 @@ const Advertisement = ({ product, handleReport, setSelectProduct }) => {
             <h1 className="uppercase bg-cyan-800 text-white w-full font-bold p-2 rounded-md text-xl ">
               {productName}
             </h1>
-            <button className="flex gap-4 justify-center items-center w-full btn btn-success">
+            <Link
+              to={`/payment/${_id}`}
+              state={{ query: product.product }}
+              className="flex gap-4 justify-center items-center w-full btn btn-success"
+            >
               <RiMoneyDollarCircleFill fontSize={24} /> {price}
               <del className="text-red-500">{originalPrice}</del>
-            </button>
+            </Link>
           </div>
         ) : (
           <Link className="btn btn-primary" to="/login">

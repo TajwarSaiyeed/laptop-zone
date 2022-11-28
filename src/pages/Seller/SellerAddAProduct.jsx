@@ -86,6 +86,8 @@ const SellerAddAProduct = () => {
               categoryName: cName,
               uploadDate,
               isVerified,
+              sold: false,
+              advertise: false,
             },
             {
               headers: {

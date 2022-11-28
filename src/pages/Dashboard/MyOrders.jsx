@@ -63,7 +63,7 @@ const MyOrders = () => {
         });
     }
   };
-
+  console.log(myorders);
   if (isLoading) {
     return <Loading />;
   }
